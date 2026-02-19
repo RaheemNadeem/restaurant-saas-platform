@@ -1,23 +1,55 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
   template: `
-    <main class="shell" [class.theme-emerald]="theme() === 'emerald'">
-      <div class="card">
-        <h1>Restaurant SaaS UI Preview</h1>
-        <p>Theme + screen skeleton preview (Sprint 1)</p>
+    <main class="auth-shell" [class.theme-emerald]="theme() === 'emerald'">
+      <section class="auth-card">
+        <div class="brand-row">
+          <div class="brand-dot"></div>
+          <div>
+            <h1>Atif Bites Admin</h1>
+            <p>Sign in to manage menus, orders, and staff.</p>
+          </div>
+        </div>
+
+        <label>Email</label>
+        <input type="email" placeholder="owner@restaurant.com" />
+
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" />
+
+        <div class="row between">
+          <label class="checkbox"><input type="checkbox" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button class="btn">Sign In</button>
+
+        <div class="divider">OR</div>
+        <button class="btn btn-outline">Continue with Google</button>
+
+        <div class="row between foot">
+          <span>New restaurant?</span>
+          <a href="#">Create account</a>
+        </div>
+      </section>
+
+      <aside class="preview-panel">
+        <h3>Live Theme Preview</h3>
+        <p>Switch tenant theme to preview white-label branding.</p>
         <button class="btn" (click)="toggleTheme()">Switch Theme</button>
-      </div>
-      <div class="card"><h3>Storefront</h3><p>Branded menu landing section preview.</p></div>
-      <div class="card"><h3>Checkout</h3><p>Cart summary + payment CTA layout preview.</p></div>
-      <div class="card"><h3>Merchant Admin</h3><p>Menu/items management shell preview.</p></div>
-      <div class="card"><h3>Staff Board</h3><p>Order status column shell preview.</p></div>
-      <router-outlet />
+        <ul>
+          <li>Storefront</li>
+          <li>Checkout</li>
+          <li>Merchant Admin</li>
+          <li>Staff Board</li>
+        </ul>
+      </aside>
     </main>
   `,
+  styleUrl: './app.scss'
 })
 export class App {
   theme = signal<'default' | 'emerald'>('default');
