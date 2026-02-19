@@ -1,0 +1,43 @@
+:root {
+  --brand-primary: #ff6b2c;
+  --brand-secondary: #111827;
+  --brand-bg: #f8fafc;
+  --brand-surface: #ffffff;
+  --brand-text: #0f172a;
+  --brand-radius: 12px;
+}
+
+.theme-emerald {
+  --brand-primary: #10b981;
+  --brand-secondary: #0b1324;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: var(--brand-bg);
+  color: var(--brand-text);
+}
+
+.shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.card {
+  background: var(--brand-surface);
+  border-radius: var(--brand-radius);
+  padding: 16px;
+  box-shadow: 0 2px 14px rgba(0,0,0,.06);
+  margin-bottom: 16px;
+}
+
+.btn {
+  border: 0;
+  background: var(--brand-primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
