@@ -5,12 +5,16 @@ import { Component, signal } from '@angular/core';
   standalone: true,
   template: `
     <main class="auth-shell" [class.theme-emerald]="theme() === 'emerald'">
-      <section class="auth-card">
+      <div class="blob blob-a"></div>
+      <div class="blob blob-b"></div>
+
+      <section class="auth-card sticker-card">
+        <div class="sticker">🍔 Goofy Mode</div>
         <div class="brand-row">
           <div class="brand-dot"></div>
           <div>
-            <h1>Atif Bites Admin</h1>
-            <p>Sign in to manage menus, orders, and staff.</p>
+            <h1>Atif Bites Admin 🚀</h1>
+            <p>Let’s serve orders, vibes, and a little chaos ✨</p>
           </div>
         </div>
 
@@ -21,31 +25,32 @@ import { Component, signal } from '@angular/core';
         <input type="password" placeholder="••••••••" />
 
         <div class="row between">
-          <label class="checkbox"><input type="checkbox" /> Remember me</label>
-          <a href="#">Forgot password?</a>
+          <label class="checkbox"><input type="checkbox" /> Keep me logged in 😎</label>
+          <a href="#">I forgot it 😬</a>
         </div>
 
-        <button class="btn">Sign In</button>
+        <button class="btn">Sign In 🍟</button>
 
         <div class="divider">OR</div>
-        <button class="btn btn-outline">Continue with Google</button>
+        <button class="btn btn-outline">Continue with Google 🧁</button>
 
         <div class="row between foot">
           <span>New restaurant?</span>
-          <a href="#">Create account</a>
+          <a href="#">Join the party 🎉</a>
         </div>
       </section>
 
-      <aside class="preview-panel">
-        <h3>Live Theme Preview</h3>
-        <p>Switch tenant theme to preview white-label branding.</p>
-        <button class="btn" (click)="toggleTheme()">Switch Theme</button>
-        <ul>
-          <li>Storefront</li>
-          <li>Checkout</li>
-          <li>Merchant Admin</li>
-          <li>Staff Board</li>
-        </ul>
+      <aside class="preview-panel sticker-card">
+        <h3>Theme Playground 🎨</h3>
+        <p>Flip themes and preview screens with playful components.</p>
+        <button class="btn" (click)="toggleTheme()">Switch Theme 🪄</button>
+
+        <div class="mini-cards">
+          <div class="mini">🍕 Storefront</div>
+          <div class="mini">🛒 Checkout</div>
+          <div class="mini">📋 Admin</div>
+          <div class="mini">🧑‍🍳 Staff Board</div>
+        </div>
       </aside>
     </main>
   `,
