@@ -1,0 +1,14 @@
+name: Task
+about: Engineering task
+labels: ["type:task"]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Task Description
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of Done

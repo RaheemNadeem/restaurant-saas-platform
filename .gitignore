@@ -1,0 +1,30 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node
+node_modules/
+dist/
+.angular/
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Env / secrets
+.env
+.env.*
+secrets.json
+client_secret.json
+
+# Logs
+*.log
+
+# Terraform / infra
+.terraform/
+*.tfstate
+*.tfstate.*
