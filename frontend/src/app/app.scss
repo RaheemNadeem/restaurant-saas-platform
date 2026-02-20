@@ -1,104 +1,57 @@
-:host { display:block; }
-
-.auth-shell {
-  position: relative;
-  overflow: hidden;
+:host {
+  --brand-primary: #ff6b2c;
+  --brand-surface: #ffffff;
+  display: block;
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 24px;
+  background: #f7f7fb;
+  color: #121826;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.topbar {
+  display: flex;
+  gap: 12px;
   align-items: center;
-  justify-content: center;
-  padding: clamp(12px, 2vw, 24px);
-  max-width: 1100px;
-  margin: 0 auto;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
 }
 
-.blob {
-  position: absolute;
-  filter: blur(2px);
-  z-index: 0;
-  opacity: .35;
-  pointer-events: none;
-}
-.blob-a { width: 220px; height: 220px; background: #ffd166; border-radius: 58% 42% 37% 63% / 49% 39% 61% 51%; top: 20px; left: -40px; }
-.blob-b { width: 180px; height: 180px; background: #7bdff2; border-radius: 44% 56% 70% 30% / 57% 52% 48% 43%; bottom: 30px; right: -30px; }
-
-.auth-card, .preview-panel {
-  position: relative;
-  z-index: 1;
-  background: var(--brand-surface);
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
-  border: 2px dashed rgba(0,0,0,.08);
-}
-
-.sticker-card::after {
-  content: '✨';
-  position: absolute;
-  right: 10px;
-  top: 8px;
+.topbar h1 {
+  margin: 0;
   font-size: 18px;
 }
 
-.auth-card { padding: clamp(14px, 2vw, 24px); max-width: 560px; width: 100%; }
-.preview-panel { padding: clamp(14px, 2vw, 20px); width: 100%; }
-
-.sticker {
-  display: inline-block;
-  background: #111827;
-  color: #fff;
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-size: 12px;
-  margin-bottom: 10px;
+nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.brand-row { display:flex; gap:12px; align-items:center; margin-bottom: 16px; }
-.brand-dot { width:14px; height:14px; border-radius:50%; background: var(--brand-primary); flex: 0 0 auto; box-shadow: 0 0 0 6px rgba(255,107,44,.15); }
-h1 { margin:0; }
-p { margin: 4px 0 0; color: #4b5563; line-height: 1.45; }
-
-label { display:block; margin: 12px 0 6px; font-weight: 700; }
-input {
-  width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #d1d5db;
-  font-size: 14px;
-}
-input:focus { outline: none; border-color: var(--brand-primary); }
-
-.row { display:flex; align-items:center; gap: 8px; }
-.between { justify-content: space-between; margin-top: 10px; }
-.checkbox { font-weight: 500; display:flex; gap:6px; align-items:center; }
-a { color: var(--brand-primary); text-decoration: none; font-weight: 600; }
-
-.btn {
-  width: 100%; margin-top: 14px; border:0; padding: 12px 14px; border-radius: 12px;
-  background: var(--brand-primary); color: #fff; font-weight: 800; cursor: pointer;
-  box-shadow: 0 6px 0 rgba(0,0,0,.1);
-}
-.btn:active { transform: translateY(1px); }
-.btn-outline { background: #fff; color: var(--brand-primary); border: 2px solid var(--brand-primary); box-shadow: none; }
-
-.divider { text-align:center; margin: 14px 0 6px; color:#6b7280; font-size: 12px; letter-spacing: .08em; }
-.foot { margin-top: 12px; }
-
-.mini-cards { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top: 12px; }
-.mini { background:#f9fafb; border: 2px solid #e5e7eb; border-radius: 12px; padding: 10px; font-weight: 700; }
-
-.theme-emerald {
-  --brand-primary: #10b981;
-  --brand-secondary: #0b1324;
+nav a {
+  text-decoration: none;
+  color: #334155;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
 }
 
-@media (max-width: 1024px) {
-  .auth-shell { grid-template-columns: 1fr; max-width: 760px; }
-  .preview-panel { order: -1; }
+nav a.active {
+  background: #fff1eb;
+  border-color: #ffd8c7;
+  color: #9a3412;
 }
 
-@media (max-width: 640px) {
-  .auth-shell { gap: 14px; min-height: auto; }
-  .brand-row { align-items: flex-start; }
-  .between { flex-direction: column; align-items: flex-start; }
-  .between a { margin-top: 4px; }
-  .mini-cards { grid-template-columns: 1fr; }
+.page-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
 }
