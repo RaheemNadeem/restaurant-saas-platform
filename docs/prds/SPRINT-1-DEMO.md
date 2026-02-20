@@ -18,3 +18,11 @@ Show navigable MVP shell + tenant-isolation API baseline.
 ## Evidence
 - Integration tests: `backend/tests/Api.IntegrationTests/TenantIsolationTests.cs`
 - RLS baseline SQL: `infra/postgres/001_tenant_rls_baseline.sql`
+
+## Weekly Status Reporting
+Use: `docs/status/WEEKLY-STATUS-TEMPLATE.md`
+
+Recommended cadence:
+- Monday: sprint scope + goals check
+- Wednesday: risk and blocker check
+- Friday: demo readiness and KPI review
