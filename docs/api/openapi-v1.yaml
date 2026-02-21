@@ -1,0 +1,185 @@
+openapi: 3.0.3
+info:
+  title: Restaurant SaaS API
+  version: 1.0.0-draft
+  description: |
+    Sprint 1 OpenAPI draft for tenant-aware merchant admin APIs.
+    This draft covers health and menu module skeleton endpoints.
+servers:
+  - url: http://localhost:5000
+    description: Local development
+
+tags:
+  - name: health
+    description: Service health checks
+  - name: menu
+    description: Tenant-scoped menu operations
+
+paths:
+  /health:
+    get:
+      tags: [health]
+      summary: Health check
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /api/menu/items:
+    get:
+      tags: [menu]
+      summary: List menu items for current tenant
+      operationId: listMenuItems
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Tenant menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItem'
+        '400':
+          description: Missing tenant context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags: [menu]
+      summary: Create a menu item in current tenant
+      operationId: createMenuItem
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMenuItemRequest'
+      responses:
+        '201':
+          description: Menu item created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuItem'
+        '400':
+          description: Missing tenant context or invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/menu/items/{id}:
+    put:
+      tags: [menu]
+      summary: Update menu item within current tenant
+      operationId: updateMenuItem
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - name: id
+          in: path
+          required: true
+          description: Menu item id
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMenuItemRequest'
+      responses:
+        '204':
+          description: Updated successfully
+        '400':
+          description: Missing tenant context or invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Item not found in current tenant scope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  parameters:
+    TenantHeader:
+      name: X-Tenant-Id
+      in: header
+      required: true
+      description: Tenant context propagated by API gateway/app layer.
+      schema:
+        type: string
+        example: tenant-a
+
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        service:
+          type: string
+          example: restaurant-saas-api
+      required: [status, service]
+
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenantId:
+          type: string
+        name:
+          type: string
+        price:
+          type: number
+          format: decimal
+      required: [id, tenantId, name, price]
+
+    CreateMenuItemRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        price:
+          type: number
+          format: decimal
+          minimum: 0
+      required: [name, price]
+
+    UpdateMenuItemRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        price:
+          type: number
+          format: decimal
+          minimum: 0
+      required: [name, price]
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
