@@ -13,10 +13,13 @@ Purpose: single source of truth for all UI screens across implemented and planne
 ## 1) Core App Screens
 
 ### 1.1 Authentication
-- **Auth / Login** — `/auth` — **Implemented**
+- **Auth / Login (Admin)** — `/auth` — **Implemented**
+- **Staff Login** — **Planned** (Sprint 3)
+- **Role-based Access Entry (Admin vs Staff)** — **Planned** (Sprint 3)
 
 ### 1.2 Onboarding
 - **Merchant Onboarding** — `/onboarding` — **Implemented**
+- **Staff Onboarding / Invite Flow** — **Planned** (Sprint 3)
 
 ### 1.3 Dashboard
 - **Merchant Dashboard (base)** — `/dashboard` — **Implemented**
@@ -67,6 +70,7 @@ Purpose: single source of truth for all UI screens across implemented and planne
 
 ## 5) Admin, Governance, Enterprise Screens
 
+- **Staff Management & Authorization Screen** (invite staff, assign/revoke roles/permissions) — **Planned** (Sprint 3)
 - **Tenant Admin Console** (tenant lifecycle, plan states, limits) — **Planned** (Sprint 9)
 - **Governance / Role Matrix Admin** — **Planned** (Sprint 9)
 - **Audit Export / Compliance Reports UI** — **Planned** (Sprint 9)
