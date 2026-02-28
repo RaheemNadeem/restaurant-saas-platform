@@ -92,6 +92,11 @@ Under `docs/prds/`:
 - `SPRINT-2-PLAN.md`
 - `SPRINT-3-PLAN.md`
 
+Additional operational references:
+- `docs/ORDER-LIFECYCLE-FLOW.md`
+- `docs/ADMIN-POST-ONBOARDING-OPERATIONS.md`
+- `docs/UI-SCREENS-MASTER.md`
+
 ---
 
 ## 5) Sprint-by-Sprint Context (1 → 4)
