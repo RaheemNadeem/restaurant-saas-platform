@@ -1,0 +1,18 @@
+{
+    "subtotal": 29.30,
+    "couponCode": "SAVE10",
+    "items": [
+        {
+            "menuItemId": "item-1",
+            "name": "Chicken Shawarma Wrap",
+            "quantity": 1,
+            "price": 12.90
+        },
+        {
+            "menuItemId": "item-2",
+            "name": "Falafel Bowl",
+            "quantity": 1,
+            "price": 11.50
+        }
+    ]
+}

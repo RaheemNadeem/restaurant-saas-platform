@@ -151,7 +151,6 @@ export class Onboarding implements OnInit {
 
   finishSetup() {
     // Validate final checks
-    console.log('Final Wizard Payload:', this.onboardingForm.value);
 
     // Move to dashboard
     this.router.navigate(['/merchant/dashboard']);

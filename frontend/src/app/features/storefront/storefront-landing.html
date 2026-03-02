@@ -1,0 +1,126 @@
+<!-- Top Nav -->
+<nav
+    class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6">
+    <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-[#BF4444] rounded-md flex items-center justify-center">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+        <span class="text-base font-semibold text-gray-800">QuickServe Kitchen</span>
+    </div>
+    <div class="flex items-center gap-4">
+        <span class="text-sm text-gray-400 hidden sm:inline">📍 Tho Ave & Flax Street</span>
+        <a routerLink="/checkout"
+            class="flex items-center gap-1.5 border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+            </svg>
+            Cart
+            <span *ngIf="cartSummary.itemCount > 0"
+                class="ml-1 px-2 py-0.5 bg-[#BF4444] text-white text-[10px] font-bold rounded-full">
+                {{ cartSummary.itemCount }}
+            </span>
+        </a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="pt-14">
+    <div class="relative h-64 md:h-80 bg-gray-900 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-900/40 to-red-900/20"></div>
+        <div
+            class="absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-l from-orange-100 to-amber-50 flex items-center justify-center">
+            <div class="text-6xl opacity-50">🌯🥙🥤</div>
+        </div>
+
+        <div class="relative z-20 h-full flex flex-col justify-center px-8 md:px-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-2">
+                Fresh wraps and bowls.<br />Pickup in 15 minutes.
+            </h1>
+            <p class="text-gray-300 text-sm md:text-base mb-5 max-w-md">
+                Quick, fresh Mediterranean wraps. Prep fresh orders and give your pickup and online delivery a try.
+            </p>
+            <div class="flex gap-3">
+                <a routerLink="/menu"
+                    class="bg-[#BF4444] hover:bg-[#a33a3a] text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors">
+                    Order Now
+                </a>
+                <button
+                    class="bg-white/10 hover:bg-white/20 text-white font-medium px-6 py-2.5 rounded-lg text-sm border border-white/20 transition-colors">
+                    View Menu
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rating / Info bar -->
+<div class="bg-white border-b border-gray-100 px-6 md:px-16 py-3 flex flex-wrap items-center gap-6">
+    <div class="flex items-center gap-1.5">
+        <span class="text-yellow-400 text-sm">★ ★ ★ ★ ★</span>
+        <span class="text-sm text-gray-600 font-medium">4.8</span>
+    </div>
+    <span class="text-sm text-gray-400">·</span>
+    <span class="text-sm text-gray-600">📍 Downtown Location</span>
+    <span class="text-sm text-gray-400">·</span>
+    <span class="text-sm text-gray-600">⏱ 12–15 min pickup</span>
+    <span class="text-sm text-gray-400">·</span>
+    <span class="text-sm text-green-600 font-medium">Open Now</span>
+</div>
+
+<!-- Menu Highlights -->
+<section class="px-6 md:px-16 py-8">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold text-gray-900">Menu Highlights</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div *ngFor="let item of featuredItems"
+            class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+            <div class="h-36 bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center text-5xl">
+                {{ item.name.includes('Wrap') ? '🌯' : item.name.includes('Bowl') ? '🥙' : '🥗' }}
+            </div>
+            <div class="p-4">
+                <div class="flex items-start justify-between mb-1">
+                    <h3 class="text-sm font-bold text-gray-900">{{ item.name }}</h3>
+                    <span class="text-sm font-bold text-gray-900">{{ item.price | currency }}</span>
+                </div>
+                <p class="text-xs text-gray-400 mb-3">Prep 12 min</p>
+                <div class="flex items-center gap-2">
+                    <span
+                        class="text-xs bg-[#BF4444] text-white px-2.5 py-0.5 rounded-full font-medium text-[10px]">Popular</span>
+                    <button (click)="addToCart(item)"
+                        class="ml-auto bg-[#BF4444] hover:bg-[#a33a3a] text-white text-xs font-medium px-4 py-1.5 rounded-lg transition-colors">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a routerLink="/menu"
+            class="inline-flex items-center gap-2 border border-red-200 text-[#BF4444] font-medium text-sm px-6 py-2.5 rounded-lg hover:bg-red-50 transition-colors">
+            🚀 View Full Menu – See all options
+        </a>
+    </div>
+</section>
+
+<!-- Footer Simple -->
+<footer
+    class="bg-gray-900 text-white px-6 md:px-16 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <div>
+        <h2 class="text-lg font-bold mb-1">Ready to order? Fresh pickup in under 20 minutes.</h2>
+        <p class="text-sm text-gray-400">QuickServe Kitchen · 555 Alexiss St</p>
+    </div>
+    <a routerLink="/menu"
+        class="bg-[#BF4444] hover:bg-[#a33a3a] text-white font-semibold px-8 py-3 rounded-xl text-sm transition-colors flex-shrink-0">
+        Order Now
+    </a>
+</footer>
