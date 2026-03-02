@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuickServe.Core.Entities;
 using QuickServe.Infrastructure.Data;
@@ -7,6 +8,7 @@ namespace QuickServe.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AnalyticsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

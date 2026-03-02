@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 export interface Coupon {
   id?: string;
@@ -45,7 +46,7 @@ export class PromotionsManager implements OnInit {
 
   loadCoupons() {
     this.isLoading = true;
-    this.http.get<Coupon[]>('http://localhost:5173/api/coupons').subscribe({
+    this.http.get<Coupon[]>(`${environment.apiUrl}/coupons`).subscribe({
       next: (data) => {
         this.coupons = data;
         this.isLoading = false;
@@ -58,7 +59,7 @@ export class PromotionsManager implements OnInit {
   }
 
   saveCoupon() {
-    this.http.post<Coupon>('http://localhost:5173/api/coupons', this.newCoupon).subscribe({
+    this.http.post<Coupon>(`${environment.apiUrl}/coupons`, this.newCoupon).subscribe({
       next: (created) => {
         this.coupons.push(created);
         this.showCreateModal = false;
@@ -71,7 +72,7 @@ export class PromotionsManager implements OnInit {
   deleteCoupon(id: string) {
     if (!confirm('Are you sure you want to delete this coupon?')) return;
 
-    this.http.delete(`http://localhost:5173/api/coupons/${id}`).subscribe({
+    this.http.delete(`${environment.apiUrl}/coupons/${id}`).subscribe({
       next: () => {
         this.coupons = this.coupons.filter(c => c.id !== id);
       },

@@ -83,7 +83,7 @@ export class Auth implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.authService.signup(this.signupForm.value).subscribe({
+    this.authService.register(this.signupForm.value).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.router.navigate(['/merchant/onboarding']);

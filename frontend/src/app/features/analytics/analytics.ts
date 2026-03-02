@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 export interface FunnelData {
     storefrontViews: number;
@@ -39,12 +40,12 @@ export class Analytics implements OnInit {
         this.isLoading = true;
 
         // In a real app we'd use forkJoin, but simple subscribers are fine for this sprint demo
-        this.http.get<FunnelData>('http://localhost:5173/api/analytics/funnel').subscribe({
+        this.http.get<FunnelData>(`${environment.apiUrl}/analytics/funnel`).subscribe({
             next: (data) => this.funnel = data,
             error: (err) => console.error('Funnel load failed', err)
         });
 
-        this.http.get<TenantHealth>('http://localhost:5173/api/analytics/tenant-health').subscribe({
+        this.http.get<TenantHealth>(`${environment.apiUrl}/analytics/tenant-health`).subscribe({
             next: (data) => {
                 this.health = data;
                 this.isLoading = false;

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuickServe.Core.Interfaces;
 
@@ -7,6 +8,7 @@ namespace QuickServe.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class MenuController : ControllerBase
     {
         private readonly IMenuService _menuService;
@@ -16,6 +18,7 @@ namespace QuickServe.API.Controllers
             _menuService = menuService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetMenu()
         {

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuickServe.Core.Entities;
@@ -7,6 +8,7 @@ namespace QuickServe.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CouponsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

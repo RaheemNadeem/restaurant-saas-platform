@@ -21,6 +21,10 @@ namespace QuickServe.Infrastructure.Data
         public DbSet<NotificationLog> NotificationLogs { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderItem> OrderItems { get; set; } = null!;
+        public DbSet<AppUser> Users { get; set; } = null!;
+        public DbSet<Tenant> Tenants { get; set; } = null!;
+        public DbSet<OperatingHours> OperatingHours { get; set; } = null!;
+        public DbSet<PaymentConfig> PaymentConfigs { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

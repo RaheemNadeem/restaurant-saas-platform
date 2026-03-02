@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface AuthResponse {
     token: string;
+    userId: string;
+    name: string;
+    role: string;
+    expiresIn: number;
 }
 
-export interface SignupResponse {
+export interface RegisterResponse {
     message: string;
 }
 
@@ -15,39 +20,73 @@ export interface SignupResponse {
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'https://localhost:7197/api/auth';
+    private apiUrl = `${environment.apiUrl}/auth`;
+    private readonly TOKEN_KEY = 'qs_auth_token';
+    private readonly USER_KEY = 'qs_user';
 
-    // Basic token cache in memory for the sprint
-    private currentToken: string | null = null;
+    private isAuthenticated$ = new BehaviorSubject<boolean>(this.hasValidToken());
 
     constructor(private http: HttpClient) { }
 
-    login(payload: any): Observable<AuthResponse> {
+    login(payload: { email: string; password: string }): Observable<AuthResponse> {
         return this.http.post<AuthResponse>(`${this.apiUrl}/login`, payload).pipe(
             tap(res => {
-                if (res && res.token) {
-                    this.currentToken = res.token;
-                    // In a real app we'd secure this in HTTP-only cookies or carefully managed localStorage
-                    localStorage.setItem('qs_auth_token', res.token);
+                if (res?.token) {
+                    localStorage.setItem(this.TOKEN_KEY, res.token);
+                    localStorage.setItem(this.USER_KEY, JSON.stringify({
+                        userId: res.userId,
+                        name: res.name,
+                        role: res.role
+                    }));
+                    this.isAuthenticated$.next(true);
                 }
             })
         );
     }
 
-    signup(payload: any): Observable<SignupResponse> {
-        return this.http.post<SignupResponse>(`${this.apiUrl}/signup`, payload);
+    register(payload: { name?: string; email: string; password: string }): Observable<RegisterResponse> {
+        return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, payload);
+    }
+
+    logout(): void {
+        localStorage.removeItem(this.TOKEN_KEY);
+        localStorage.removeItem(this.USER_KEY);
+        this.isAuthenticated$.next(false);
     }
 
     getToken(): string | null {
-        if (!this.currentToken) {
-            this.currentToken = localStorage.getItem('qs_auth_token');
+        return localStorage.getItem(this.TOKEN_KEY);
+    }
+
+    isLoggedIn(): boolean {
+        return this.hasValidToken();
+    }
+
+    isLoggedIn$(): Observable<boolean> {
+        return this.isAuthenticated$.asObservable();
+    }
+
+    getUser(): { userId: string; name: string; role: string } | null {
+        const raw = localStorage.getItem(this.USER_KEY);
+        if (!raw) return null;
+        try { return JSON.parse(raw); } catch { return null; }
+    }
+
+    private hasValidToken(): boolean {
+        const token = localStorage.getItem(this.TOKEN_KEY);
+        if (!token) return false;
+
+        // Basic JWT expiry check (decode payload without library)
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return payload.exp * 1000 > Date.now();
+        } catch {
+            return false;
         }
-        return this.currentToken;
     }
 
     // --- Mocked Recovery Methods (Sprint 9) ---
     requestPasswordReset(email: string): Observable<any> {
-        // Mock a 1-second delay for the email sending process
         return new Observable(observer => {
             console.log(`[Mock] Send reset link to: ${email}`);
             setTimeout(() => {
@@ -58,7 +97,6 @@ export class AuthService {
     }
 
     resetPassword(token: string, newPassword: string): Observable<any> {
-        // Mock a 1-second delay for saving the new password
         return new Observable(observer => {
             console.log(`[Mock] Password reset for token: ${token}`);
             setTimeout(() => {

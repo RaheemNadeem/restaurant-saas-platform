@@ -13,28 +13,35 @@ import { Onboarding } from './features/onboarding/onboarding';
 import { Menu } from './features/menu/menu';
 import { PromotionsManager } from './features/promotions/promotions-manager/promotions-manager';
 import { Analytics } from './features/analytics/analytics';
+import { authGuard } from './core/guards/auth.guard';
+import { AdminComponent } from './features/admin/admin.component';
 
 export const routes: Routes = [
-  // Customer Storefront
+  // Customer Storefront (no auth required)
   { path: '', component: StorefrontLanding },
   { path: 'menu', component: MenuBrowse },
   { path: 'checkout', component: Checkout },
   { path: 'order-confirmation', component: OrderConfirmation },
 
-  // Authentication & Recovery
-  { path: 'merchant/login', component: Auth },
-  { path: 'merchant/signup', component: Auth },
+  // Authentication & Recovery (no auth required)
+  { path: 'login', component: Auth },
+  { path: 'signup', component: Auth },
+  { path: 'merchant/login', redirectTo: 'login' },
+  { path: 'merchant/signup', redirectTo: 'signup' },
   { path: 'recover', component: RecoverAccountComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'reset-success', component: ResetSuccessComponent },
 
-  // Merchant Portal
-  { path: 'merchant/onboarding', component: Onboarding },
-  { path: 'merchant/dashboard', component: Dashboard },
-  { path: 'merchant/menu', component: Menu },
-  { path: 'merchant/promotions', component: PromotionsManager },
-  { path: 'merchant/order-manager', component: OrderManagerComponent },
-  { path: 'merchant/analytics', component: Analytics },
+  // Merchant Portal (protected by authGuard)
+  { path: 'merchant/onboarding', component: Onboarding, canActivate: [authGuard] },
+  { path: 'merchant/dashboard', component: Dashboard, canActivate: [authGuard] },
+  { path: 'merchant/menu', component: Menu, canActivate: [authGuard] },
+  { path: 'merchant/promotions', component: PromotionsManager, canActivate: [authGuard] },
+  { path: 'merchant/order-manager', component: OrderManagerComponent, canActivate: [authGuard] },
+  { path: 'merchant/analytics', component: Analytics, canActivate: [authGuard] },
+
+  // Super-Admin (protected by authGuard — role check happens at API level)
+  { path: 'admin', component: AdminComponent, canActivate: [authGuard] },
 
   // Catch all
   { path: '**', redirectTo: '' }
