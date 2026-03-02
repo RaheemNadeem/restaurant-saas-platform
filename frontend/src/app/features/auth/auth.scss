@@ -1,0 +1,16 @@
+.auth-background {
+    background: radial-gradient(ellipse at 20% 20%, #e8d5c8 0%, #f0ddd0 25%, #e8cfc0 50%, #ddc4b4 75%, #d4b8a8 100%);
+    background-size: cover;
+    position: relative;
+
+    /* Silk fabric effect */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(48deg, transparent 0px, rgba(255, 255, 255, 0.08) 2px, transparent 4px),
+            repeating-linear-gradient(138deg, transparent 0px, rgba(200, 160, 130, 0.06) 3px, transparent 6px);
+        pointer-events: none;
+    }
+}

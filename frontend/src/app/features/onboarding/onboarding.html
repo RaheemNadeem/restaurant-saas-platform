@@ -1,0 +1,402 @@
+<!-- Overall Wrapper -->
+<div class="bg-gray-50 min-h-screen font-sans">
+
+    <!-- Top Bar -->
+    <header
+        class="bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6 fixed top-0 left-0 right-0 z-30">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="text-base font-semibold text-gray-800">QuickServe</span>
+        </div>
+
+        <button *ngIf="currentStep === 5" (click)="finishSetup()"
+            class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" x2="21" y1="14" y2="3" />
+            </svg>
+            Open Storefront
+        </button>
+        <button *ngIf="currentStep !== 5"
+            class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+            Save Draft
+        </button>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+        <!-- Persistent Left Sidebar -->
+        <aside
+            class="w-56 bg-white border-r border-gray-100 fixed top-14 bottom-0 left-0 flex flex-col justify-between py-6 px-4">
+            <nav class="space-y-1">
+                <a
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary-soft text-primary font-medium text-sm cursor-default">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="7" height="7" x="3" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="14" rx="1" />
+                        <rect width="7" height="7" x="3" y="14" rx="1" />
+                    </svg>
+                    Onboarding
+                </a>
+                <a
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-not-allowed opacity-60">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                        <rect width="6" height="4" x="9" y="3" rx="1" />
+                    </svg>
+                    Orders
+                </a>
+                <a
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-not-allowed opacity-60">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                        <path d="M7 2v20" />
+                    </svg>
+                    Menu
+                </a>
+            </nav>
+
+            <!-- User Info Block -->
+            <div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg mb-2">
+                    <div class="w-8 h-8 rounded-full bg-primary-soft flex items-center justify-center">
+                        <span class="text-xs font-semibold text-primary">AR</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-gray-900 truncate">Ayesha Rahman</p>
+                        <p class="text-xs text-gray-500">Owner</p>
+                    </div>
+                </div>
+                <!-- Needs absolute router clear to logout -->
+                <button routerLink="/merchant/login"
+                    class="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary-soft rounded-lg transition-colors w-full">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>
+                    Log out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="ml-56 flex-1 p-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Merchant Onboarding</h1>
+                    <p class="text-sm text-gray-500 mt-1">Everything needed to launch your storefront.</p>
+                </div>
+
+                <!-- Tab Header Navigator -->
+                <div class="flex gap-0 mb-8 border-b border-gray-200">
+                    <button *ngFor="let s of steps" (click)="setStep(s.id)"
+                        [ngClass]="{'text-primary border-b-2 border-primary -mb-px font-semibold': currentStep === s.id, 'text-gray-500 hover:text-gray-700': currentStep !== s.id}"
+                        class="px-5 py-3 text-sm transition-colors cursor-pointer">
+                        {{s.id}}. {{s.label}}
+                    </button>
+                </div>
+
+                <div class="flex gap-6">
+
+                    <!-- Left: Dynamic Content Form Panel -->
+                    <div class="flex-1">
+
+                        <!-- STEP 1: BUSINESS -->
+                        <div *ngIf="currentStep === 1"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 slide-fade-enter">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Step 1 of 5: Business Profile</h2>
+                            <p class="text-sm text-gray-500 mb-6">Set up your restaurant's basic details for billing and
+                                owner setup.</p>
+
+                            <form [formGroup]="businessGroup" (ngSubmit)="nextStep(businessGroup)" class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Restaurant
+                                        Name</label>
+                                    <input type="text" formControlName="restaurantName"
+                                        [ngClass]="{'border-red-300': isInvalid(businessGroup, 'restaurantName')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Owner Full
+                                        Name</label>
+                                    <input type="text" formControlName="ownerName"
+                                        [ngClass]="{'border-red-300': isInvalid(businessGroup, 'ownerName')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Business Email</label>
+                                    <input type="email" formControlName="email"
+                                        [ngClass]="{'border-red-300': isInvalid(businessGroup, 'email')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
+                                    <input type="tel" formControlName="phone"
+                                        [ngClass]="{'border-red-300': isInvalid(businessGroup, 'phone')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Address</label>
+                                    <input type="text" formControlName="address"
+                                        placeholder="123 Main St, City, State 12345"
+                                        [ngClass]="{'border-red-300': isInvalid(businessGroup, 'address')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div class="flex justify-end pt-2">
+                                    <button type="submit"
+                                        class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">
+                                        Continue to Branding
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- STEP 2: BRANDING -->
+                        <div *ngIf="currentStep === 2"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 slide-fade-enter">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Brand Identity</h2>
+                            <p class="text-sm text-gray-500 mb-6">Configure names, logo, fonts, and language for your
+                                storefront.</p>
+
+                            <form [formGroup]="brandGroup" (ngSubmit)="nextStep(brandGroup)" class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Display Brand
+                                        Name</label>
+                                    <input type="text" formControlName="displayBrandName"
+                                        [ngClass]="{'border-red-300': isInvalid(brandGroup, 'displayBrandName')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Primary Brand
+                                        Color</label>
+                                    <div class="flex items-center gap-3">
+                                        <!-- Realistically this ties to an angular color picker, falling back to basic input for mockup parity -->
+                                        <div class="w-8 h-8 rounded-lg border border-gray-200 cursor-pointer"
+                                            [style.backgroundColor]="brandGroup.get('primaryColor')?.value || '#BF4444'">
+                                        </div>
+                                        <input type="text" formControlName="primaryColor"
+                                            class="flex-1 px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Typography</label>
+                                    <select formControlName="typography"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+                                        <option value="Inter">Inter</option>
+                                        <option value="Outfit">Outfit</option>
+                                        <option value="Roboto">Roboto</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex justify-between pt-2">
+                                    <button type="button" (click)="prevStep()"
+                                        class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</button>
+                                    <button type="submit"
+                                        class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">
+                                        Continue to Menu
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- STEP 3: MENU -->
+                        <div *ngIf="currentStep === 3"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 slide-fade-enter">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Initial Menu Setup</h2>
+                            <p class="text-sm text-gray-500 mb-6">Add one category and item to meet minimum publish
+                                requirements.</p>
+
+                            <form [formGroup]="menuGroup" (ngSubmit)="nextStep(menuGroup)" class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">First Category (e.g.,
+                                        Appetizers)</label>
+                                    <input type="text" formControlName="categoryName"
+                                        [ngClass]="{'border-red-300': isInvalid(menuGroup, 'categoryName')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary" />
+                                </div>
+                                <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg space-y-4">
+                                    <h3 class="text-sm font-semibold">First Menu Item</h3>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-700 mb-1">Item
+                                                Name</label>
+                                            <input type="text" formControlName="itemName"
+                                                [ngClass]="{'border-red-300': isInvalid(menuGroup, 'itemName')}"
+                                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-medium text-gray-700 mb-1">Price</label>
+                                            <input type="number" formControlName="itemPrice"
+                                                [ngClass]="{'border-red-300': isInvalid(menuGroup, 'itemPrice')}"
+                                                class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between pt-2">
+                                    <button type="button" (click)="prevStep()"
+                                        class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</button>
+                                    <button type="submit"
+                                        class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">
+                                        Continue to Payments
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- STEP 4: PAYMENTS -->
+                        <div *ngIf="currentStep === 4"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 slide-fade-enter">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Stripe Connect Setup</h2>
+                            <p class="text-sm text-gray-500 mb-6">Register banking details to accept payouts.</p>
+
+                            <form [formGroup]="paymentGroup" (ngSubmit)="nextStep(paymentGroup)" class="space-y-5">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Legal Business
+                                        Name</label>
+                                    <input type="text" formControlName="legalName"
+                                        [ngClass]="{'border-red-300': isInvalid(paymentGroup, 'legalName')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Tax ID / EIN</label>
+                                    <input type="text" formControlName="taxId"
+                                        [ngClass]="{'border-red-300': isInvalid(paymentGroup, 'taxId')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Routing / Account
+                                        (Simulated)</label>
+                                    <input type="text" formControlName="bankAccount"
+                                        [ngClass]="{'border-red-300': isInvalid(paymentGroup, 'bankAccount')}"
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700" />
+                                </div>
+                                <div class="flex justify-between pt-2">
+                                    <button type="button" (click)="prevStep()"
+                                        class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</button>
+                                    <button type="submit"
+                                        class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">
+                                        Continue to Publish
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- STEP 5: PUBLISH -->
+                        <div *ngIf="currentStep === 5"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 slide-fade-enter">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Launch Readiness Checklist</h2>
+                            <p class="text-sm text-gray-500 mb-6">Review your configuration before taking the storefront
+                                live.</p>
+
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Business info complete</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Brand assets configured</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Initial Menu verified</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Banking linked correctly</span>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between pt-4 border-t border-gray-100">
+                                <button type="button" (click)="prevStep()"
+                                    class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</button>
+                                <button type="button" (click)="finishSetup()"
+                                    class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors shadow-sm">
+                                    Take Storefront Live 🚀
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Sidebar: Progress Snapshot -->
+                    <div class="w-64 space-y-4 flex-shrink-0">
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                            <h3 class="text-sm font-semibold text-gray-800 mb-1">Setup Progress</h3>
+                            <p class="text-xs text-gray-400 mb-4">Step {{currentStep}} of 5 in progress</p>
+
+                            <div class="space-y-3">
+                                <div *ngFor="let s of steps" class="flex items-center gap-2"
+                                    [ngClass]="{'opacity-50': s.status === 'Pending'}">
+                                    <div class="w-2 h-2 rounded-full flex-shrink-0"
+                                        [ngClass]="{'bg-green-500': s.status === 'Complete', 'bg-primary': s.status === 'In Progress', 'bg-gray-300': s.status === 'Pending'}">
+                                    </div>
+                                    <div class="flex-1 h-1.5 rounded-full"
+                                        [ngClass]="{'bg-green-100': s.status === 'Complete', 'bg-red-100': s.status === 'In Progress', 'bg-gray-100': s.status === 'Pending'}">
+                                        <div class="h-1.5 rounded-full w-full" *ngIf="s.status === 'Complete'"
+                                            class="bg-green-500"></div>
+                                        <div class="h-1.5 rounded-full w-1/2" *ngIf="s.status === 'In Progress'"
+                                            class="bg-primary"></div>
+                                    </div>
+                                    <span class="text-xs w-24 flex-shrink-0"
+                                        [ngClass]="{'text-green-700': s.status === 'Complete', 'text-primary font-medium': s.status === 'In Progress', 'text-gray-400': s.status === 'Pending'}">
+                                        {{s.label}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Preview specifically for Branding step -->
+                        <div *ngIf="currentStep === 2"
+                            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 slide-fade-enter">
+                            <h3 class="text-sm font-semibold text-gray-800 mb-1">Live Storefront Preview</h3>
+                            <p class="text-xs text-gray-400 mb-4">Preview live before publishing</p>
+
+                            <div class="border border-red-100 rounded-xl p-4 bg-primary-soft">
+                                <p class="text-sm font-bold text-gray-900">{{ brandGroup.get('displayBrandName')?.value
+                                    || 'QuickServe Kitchen' }}</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Your brand goes here.</p>
+                                <button class="mt-2 text-xs font-semibold text-white px-3 py-1.5 rounded-md"
+                                    [style.backgroundColor]="brandGroup.get('primaryColor')?.value || '#BF4444'">View
+                                    Menu</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

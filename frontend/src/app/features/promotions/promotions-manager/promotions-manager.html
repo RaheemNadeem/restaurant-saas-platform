@@ -1,0 +1,142 @@
+<div class="p-8">
+    <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Promotions & Coupons</h1>
+                <p class="text-sm text-gray-500 mt-1">Manage discounts to attract and retain customers.</p>
+            </div>
+            <button (click)="showCreateModal = true"
+                class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Create Promo Code
+            </button>
+        </div>
+
+        <div *ngIf="isLoading" class="flex justify-center py-12">
+            <p class="text-gray-500 text-sm">Loading promotions...</p>
+        </div>
+
+        <div *ngIf="!isLoading && coupons.length === 0"
+            class="bg-white rounded-2xl border border-gray-100 shadow-sm p-12 text-center">
+            <div
+                class="w-16 h-16 bg-primary-soft rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                    <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">No Active Promotions</h3>
+            <p class="text-sm text-gray-500 mb-6 max-w-sm mx-auto">Create promo codes to issue discounts to your
+                customers.</p>
+            <button (click)="showCreateModal = true"
+                class="px-4 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 text-sm font-medium rounded-lg transition-colors shadow-sm">
+                Create your first code
+            </button>
+        </div>
+
+        <div *ngIf="coupons.length > 0" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="text-base font-bold text-gray-900">Active Coupons</h2>
+            </div>
+            <div class="divide-y divide-gray-50">
+                <div *ngFor="let coupon of coupons"
+                    class="flex items-center gap-4 py-3.5 px-6 hover:bg-gray-50 transition-colors">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <p class="text-sm font-bold text-gray-900 uppercase tracking-wider">{{ coupon.code }}</p>
+                            <span *ngIf="coupon.isActive"
+                                class="px-2 py-0.5 text-[10px] font-semibold bg-green-100 text-green-700 rounded-lg">ACTIVE</span>
+                            <span *ngIf="!coupon.isActive"
+                                class="px-2 py-0.5 text-[10px] font-semibold bg-gray-100 text-gray-600 rounded-lg">EXPIRED</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-0.5">
+                            <span *ngIf="coupon.type === 0">{{ coupon.discountValue }}% OFF</span>
+                            <span *ngIf="coupon.type === 1">${{ coupon.discountValue }} OFF</span>
+                            &middot;
+                            {{ coupon.currentUses }} / {{ coupon.maxUses === 0 ? '&infin;' : coupon.maxUses }} uses
+                        </p>
+                    </div>
+                    <div class="text-right flex items-center gap-4">
+                        <p class="text-xs text-gray-500">Valid til {{ coupon.validUntil | date:'MMM d, yyyy' }}</p>
+                        <button (click)="deleteCoupon(coupon.id!)"
+                            class="text-sm text-red-500 hover:text-red-700 font-medium">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" (click)="showCreateModal = false"></div>
+
+    <!-- Dialog -->
+    <div
+        class="relative bg-white rounded-2xl shadow-xl w-full max-w-md border border-gray-100 overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between shrink-0">
+            <h2 class="text-base font-bold text-gray-900">Create new promo code</h2>
+            <button (click)="showCreateModal = false" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="p-6 overflow-y-auto space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 mb-1">Promo Code</label>
+                <input type="text" [(ngModel)]="newCoupon.code" placeholder="e.g. SUMMER24"
+                    class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary uppercase" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Discount Type</label>
+                    <select [(ngModel)]="newCoupon.type"
+                        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                        <option [ngValue]="0">Percentage (%)</option>
+                        <option [ngValue]="1">Fixed Amount ($)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Discount Value</label>
+                    <input type="number" [(ngModel)]="newCoupon.discountValue" placeholder="10"
+                        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" />
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Usage Limit</label>
+                    <input type="number" [(ngModel)]="newCoupon.maxUses" placeholder="0 for unlimited"
+                        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Valid Until</label>
+                    <input type="date" [(ngModel)]="newCoupon.validUntil"
+                        class="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary" />
+                </div>
+            </div>
+        </div>
+
+        <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end gap-2 shrink-0">
+            <button (click)="showCreateModal = false"
+                class="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                Cancel
+            </button>
+            <button (click)="saveCoupon()" [disabled]="!newCoupon.code || newCoupon.discountValue <= 0"
+                class="px-4 py-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
+                Save Promo Code
+            </button>
+        </div>
+    </div>
+</div>

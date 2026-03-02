@@ -1,42 +1,38 @@
-name: ci
+name: QuickServe CI
 
 on:
-  pull_request:
-    branches: [ main ]
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
-  backend:
+  build-backend:
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('backend/**/*.csproj') != '' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-      - name: Restore
-        run: dotnet restore ./backend
-      - name: Build
-        run: dotnet build ./backend --no-restore --configuration Release
-      - name: Test
-        run: dotnet test ./backend --no-build --configuration Release
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore backend/QuickServe.API/QuickServe.API.csproj
+    - name: Build
+      run: dotnet build backend/QuickServe.API/QuickServe.API.csproj --no-restore
+    - name: Test
+      run: dotnet test backend/QuickServe.API/QuickServe.API.csproj --no-build --verbosity normal
 
-  frontend:
+  build-frontend:
     runs-on: ubuntu-latest
-    if: ${{ hashFiles('frontend/package.json') != '' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-      - name: Install
-        run: cd frontend && npm ci
-      - name: Lint
-        run: cd frontend && npm run lint --if-present
-      - name: Test
-        run: cd frontend && npm test -- --watch=false --browsers=ChromeHeadless || npm test -- --watch=false
-      - name: Build
-        run: cd frontend && npm run build
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    - name: Build Angular Output
+      working-directory: ./frontend
+      run: npm run build

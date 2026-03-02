@@ -1,0 +1,434 @@
+{
+  "variables": {
+    "--accent": {
+      "type": "color",
+      "value": "#F5F4F1"
+    },
+    "--accent-foreground": {
+      "type": "color",
+      "value": "#1A1918"
+    },
+    "--background": {
+      "type": "color",
+      "value": "#F5F4F1"
+    },
+    "--border": {
+      "type": "color",
+      "value": "#E5E4E1"
+    },
+    "--border-strong": {
+      "type": "color",
+      "value": "#D1D0CD"
+    },
+    "--card": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--card-foreground": {
+      "type": "color",
+      "value": "#1A1918"
+    },
+    "--color-error": {
+      "type": "color",
+      "value": "#FEF2F2"
+    },
+    "--color-error-foreground": {
+      "type": "color",
+      "value": "#DC2626"
+    },
+    "--color-info": {
+      "type": "color",
+      "value": "#EFF6FF"
+    },
+    "--color-info-foreground": {
+      "type": "color",
+      "value": "#2563EB"
+    },
+    "--color-success": {
+      "type": "color",
+      "value": "#ECFDF5"
+    },
+    "--color-success-foreground": {
+      "type": "color",
+      "value": "#059669"
+    },
+    "--color-warning": {
+      "type": "color",
+      "value": "#FFFBEB"
+    },
+    "--color-warning-foreground": {
+      "type": "color",
+      "value": "#D97706"
+    },
+    "--destructive": {
+      "type": "color",
+      "value": "#DC2626"
+    },
+    "--destructive-foreground": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--font-primary": {
+      "type": "string",
+      "value": "Outfit"
+    },
+    "--font-secondary": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "--foreground": {
+      "type": "color",
+      "value": "#1A1918"
+    },
+    "--input": {
+      "type": "color",
+      "value": "#E5E4E1"
+    },
+    "--muted": {
+      "type": "color",
+      "value": "#F0EFEC"
+    },
+    "--muted-foreground": {
+      "type": "color",
+      "value": "#6D6C6A"
+    },
+    "--primary": {
+      "type": "color",
+      "value": "#EF4444"
+    },
+    "--primary-foreground": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--primary-hover": {
+      "type": "color",
+      "value": "#DC2626"
+    },
+    "--primary-soft": {
+      "type": "color",
+      "value": "#FEF2F2"
+    },
+    "--radius-l": {
+      "type": "number",
+      "value": 16
+    },
+    "--radius-m": {
+      "type": "number",
+      "value": 12
+    },
+    "--radius-pill": {
+      "type": "number",
+      "value": 999
+    },
+    "--radius-s": {
+      "type": "number",
+      "value": 8
+    },
+    "--radius-xs": {
+      "type": "number",
+      "value": 4
+    },
+    "--ring": {
+      "type": "color",
+      "value": "#EF4444"
+    },
+    "--secondary": {
+      "type": "color",
+      "value": "#F0EFEC"
+    },
+    "--secondary-foreground": {
+      "type": "color",
+      "value": "#1A1918"
+    },
+    "--sidebar": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "--sidebar-active": {
+      "type": "color",
+      "value": "#FEF2F2"
+    },
+    "--sidebar-active-foreground": {
+      "type": "color",
+      "value": "#EF4444"
+    },
+    "--sidebar-border": {
+      "type": "color",
+      "value": "#E5E4E1"
+    },
+    "--sidebar-foreground": {
+      "type": "color",
+      "value": "#6D6C6A"
+    }
+  },
+  "children_types": [
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame",
+    "frame"
+  ],
+  "extracted_colors": [],
+  "extracted_textStyles": [
+    {
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 14,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 18,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 12,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 14,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 13,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 18,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 32,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 15,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 22,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 13,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 15,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 34,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 24,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 13,
+      "fontWeight": "500"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 16,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 22,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 30,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 64,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 32,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 24,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 54,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 30,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 28,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 42,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 13,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 11,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 56,
+      "fontWeight": "700",
+      "lineHeight": 1.08
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 21,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 15,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 26,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 50,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 18,
+      "fontWeight": "normal"
+    },
+    {
+      "fontFamily": "Inter",
+      "fontSize": 13,
+      "fontWeight": "600"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 14,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 20,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 16,
+      "fontWeight": "700"
+    },
+    {
+      "fontFamily": "Outfit",
+      "fontSize": 12,
+      "fontWeight": "600"
+    }
+  ]
+}

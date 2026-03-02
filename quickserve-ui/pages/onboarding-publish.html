@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickServe – Publish Storefront</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <header
+        class="bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6 fixed top-0 left-0 right-0 z-30">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-primary rounded-md flex items-center justify-center"><svg width="16" height="16"
+                    viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg></div>
+            <span class="text-base font-semibold text-gray-800">QuickServe</span>
+        </div>
+        <a href="storefront-landing.html"
+            class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" x2="21" y1="14" y2="3" />
+            </svg>
+            Open Storefront
+        </a>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+        <aside
+            class="w-56 bg-white border-r border-gray-100 fixed top-14 bottom-0 left-0 flex flex-col justify-between py-6 px-4">
+            <nav class="space-y-1">
+                <a href="onboarding-business.html"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary-soft text-primary font-medium text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect width="7" height="7" x="3" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="14" rx="1" />
+                        <rect width="7" height="7" x="3" y="14" rx="1" />
+                    </svg>
+                    Onboarding
+                </a>
+                <a href="order-manager.html"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm"><svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                        <rect width="6" height="4" x="9" y="3" rx="1" />
+                    </svg>Orders</a>
+                <a href="onboarding-menu.html"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm"><svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                        <path d="M7 2v20" />
+                    </svg>Menu</a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm"><svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18" />
+                    </svg>Analytics</a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm"><svg
+                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>Settings</a>
+            </nav>
+                        <div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer mb-2">
+                    <div class="w-8 h-8 rounded-full bg-primary-soft flex items-center justify-center"><span
+                            class="text-xs font-semibold text-primary">AS</span></div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-gray-900 truncate font-outfit">Ayesha Rahman</p>
+                        <p class="text-xs text-gray-500">Owner</p>
+                    </div>
+                </div>
+                <button class="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary-soft rounded-lg transition-colors w-full"><svg
+                        width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>Log out</button>
+            </div>
+        </aside>
+
+        <main class="ml-56 flex-1 p-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Publish Storefront</h1>
+                    <p class="text-sm text-gray-500 mt-1">Step 5 of 5 – Review checklist and go live.</p>
+                </div>
+
+                <div class="flex gap-0 mb-8 border-b border-gray-200">
+                    <button class="px-5 py-3 text-sm text-gray-500">1. Business</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">2. Branding</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">3. Menu</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">4. Payments</button>
+                    <button class="px-5 py-3 text-sm font-semibold text-primary border-b-2 border-primary -mb-px">5.
+                        Publish</button>
+                </div>
+
+                <div class="flex gap-6">
+                    <!-- Left: Readiness Checklist -->
+                    <div class="flex-1">
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Launch Readiness Checklist</h2>
+                            <p class="text-sm text-gray-500 mb-6">All items below to make your store publicly available.
+                            </p>
+
+                            <div class="space-y-3 mb-6">
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Business info complete</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">Brand assets configured</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-green-50 border border-green-100">
+                                    <svg class="text-green-600 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                    <span class="text-sm text-green-700 font-medium">At least 1 menu item added</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-amber-50 border border-amber-100">
+                                    <svg class="text-amber-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" x2="12" y1="8" y2="12" />
+                                        <line x1="12" x2="12.01" y1="16" y2="16" />
+                                    </svg>
+                                    <span class="text-sm text-amber-700 font-medium">Stripe payments pending</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                                    <svg class="text-gray-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                                        width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" x2="12" y1="8" y2="12" />
+                                    </svg>
+                                    <span class="text-sm text-gray-400">Custom domain optional</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <h3 class="text-sm font-semibold text-gray-800 mb-2">Store URL Preview</h3>
+                                <p class="text-xs text-gray-500 mb-2">Public URL</p>
+                                <div
+                                    class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-gray-400"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                                    </svg>
+                                    <span
+                                        class="text-sm text-gray-600 font-mono">quickserve-kitchen.quickserve.app</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-2">
+                                    <span class="text-xs text-green-600 font-medium">Live validation: 5 minutes
+                                        ago</span>
+                                    <button class="text-xs text-primary hover:text-primary-hover font-medium">Run Checks
+                                        Again</button>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between pt-4 border-t border-gray-100">
+                                <a href="onboarding-payments.html"
+                                    class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</a>
+                                <a href="dashboard.html"
+                                    class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">Go
+                                    to Dashboard</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Payment Status + Go Live -->
+                    <div class="w-64 flex-shrink-0 space-y-4">
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                            <h3 class="text-sm font-semibold text-gray-800 mb-1">Payment Status</h3>
+                            <p class="text-xs text-gray-400 mb-3">Finalize stripe setup.</p>
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                                <span class="text-xs text-gray-600">Stripe KYC incomplete</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mb-3">Finish KYC and bank details to accept live payments on
+                                Go Live.</p>
+                            <button
+                                class="w-full py-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-lg transition-colors">Complete
+                                Stripe Setup</button>
+                        </div>
+
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                            <h3 class="text-sm font-semibold text-gray-800 mb-1">Go Live</h3>
+                            <p class="text-xs text-gray-500 mb-4">Publish when all checks pass.</p>
+                            <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                    class="text-amber-500 flex-shrink-0" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <line x1="12" x2="12" y1="8" y2="12" />
+                                </svg>
+                                <span class="text-xs text-amber-700">1 item still pending. Fix items to publish
+                                    live.</span>
+                            </div>
+                            <button
+                                class="w-full flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-lg transition-colors mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" x2="21" y1="14" y2="3" />
+                                </svg>
+                                Publish Storefront
+                            </button>
+                            <button
+                                class="w-full flex items-center justify-center gap-2 py-2 border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                Preview Storefront
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

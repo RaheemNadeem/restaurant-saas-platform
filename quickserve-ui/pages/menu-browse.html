@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickServe Kitchen – Browse Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Top Nav -->
+    <nav class="sticky top-0 z-40 bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-primary rounded-md flex items-center justify-center"><svg width="13" height="13"
+                    viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg></div>
+            <span class="text-base font-semibold text-gray-800">QuickServe Kitchen</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="storefront-landing.html"
+                class="text-sm text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+                Back to Landing
+            </a>
+            <a href="cart-drawer.html"
+                class="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="21" r="1" />
+                    <circle cx="19" cy="21" r="1" />
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
+                Cart
+                <span
+                    class="w-5 h-5 bg-white text-primary text-xs font-bold rounded-full flex items-center justify-center">3</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-6 py-8 flex gap-6">
+        <!-- Left: Menu Items -->
+        <div class="flex-1">
+            <h1 class="text-2xl font-bold text-gray-900 mb-1">Browse Menu</h1>
+            <p class="text-sm text-gray-400 mb-5">Customize your pickup order with real-time availability and prep
+                times.</p>
+
+            <!-- Category Tabs -->
+            <div class="flex gap-2 mb-5 flex-wrap">
+                <button class="px-4 py-2 bg-gray-900 text-white text-xs font-semibold rounded-full">All</button>
+                <button
+                    class="px-4 py-2 border border-gray-200 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-50">Wraps</button>
+                <button
+                    class="px-4 py-2 border border-gray-200 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-50">Bowls</button>
+                <button
+                    class="px-4 py-2 border border-gray-200 text-gray-600 text-xs font-medium rounded-full hover:bg-gray-50">Drinks</button>
+            </div>
+
+            <!-- Search -->
+            <div class="flex items-center gap-3 mb-6">
+                <label class="text-sm font-medium text-gray-700">Search</label>
+                <div class="flex-1 relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.3-4.3" />
+                    </svg>
+                    <input type="text" placeholder="Search..."
+                        class="w-full pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-xs text-gray-500">Sort: Price (Low to High)</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" class="text-gray-400"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Menu Item List -->
+            <div class="space-y-4">
+                <!-- Item 1 -->
+                <div
+                    class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex gap-4 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-20 h-20 rounded-xl bg-gradient-to-br from-orange-100 to-amber-50 flex items-center justify-center text-3xl flex-shrink-0">
+                        🌯</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-base font-bold text-gray-900">Chicken Shawarma Wrap</h3>
+                            <span class="text-base font-bold text-gray-900">$12.90</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Savory chicken, garlic sauce, oil Mill</p>
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="text-xs bg-primary text-white px-2 py-0.5 rounded-full font-medium">Popular</span>
+                            <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-medium">12-15
+                                min</span>
+                            <button
+                                class="ml-auto bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">+
+                                Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div
+                    class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex gap-4 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-20 h-20 rounded-xl bg-gradient-to-br from-green-50 to-teal-50 flex items-center justify-center text-3xl flex-shrink-0">
+                        🥙</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-base font-bold text-gray-900">Falafel Bowl</h3>
+                            <span class="text-base font-bold text-gray-900">$11.50</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Crispy falafel, hummus, pickled veg</p>
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">Vegetarian</span>
+                            <button
+                                class="ml-auto bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">+
+                                Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div
+                    class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex gap-4 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-20 h-20 rounded-xl bg-gradient-to-br from-yellow-50 to-orange-50 flex items-center justify-center text-3xl flex-shrink-0">
+                        🥤</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-base font-bold text-gray-900">Mango Lassi</h3>
+                            <span class="text-base font-bold text-gray-900">$4.90</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Fresh mango shake with mango sauce</p>
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">Drink</span>
+                            <button
+                                class="ml-auto bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">+
+                                Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div
+                    class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex gap-4 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-20 h-20 rounded-xl bg-gradient-to-br from-red-50 to-rose-50 flex items-center justify-center text-3xl flex-shrink-0">
+                        🥗</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-base font-bold text-gray-900">Mixed Grill Platter</h3>
+                            <span class="text-base font-bold text-gray-900">$18.90</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mb-2">Chicken, kofta, and lamb with rice</p>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs bg-red-100 text-primary-hover px-2 py-0.5 rounded-full font-medium">Best
+                                value</span>
+                            <button
+                                class="ml-auto bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-1.5 rounded-lg transition-colors">+
+                                Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Cart sidebar -->
+        <div class="w-72 flex-shrink-0">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-20">
+                <h2 class="text-base font-bold text-gray-900 mb-1">Your Cart</h2>
+                <p class="text-xs text-gray-400 mb-4">3 items · Pickup in 15–35 min</p>
+
+                <div class="divide-y divide-gray-50 mb-4">
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <p class="text-xs font-medium text-gray-800">1x Chicken Shawarma Wrap</p>
+                            <p class="text-xs text-gray-400">$12.90</p>
+                        </div>
+                        <span class="text-sm font-bold text-gray-900">$12.90</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <p class="text-xs font-medium text-gray-800">1x Falafel Bowl</p>
+                            <p class="text-xs text-gray-400">$11.50</p>
+                        </div>
+                        <span class="text-sm font-bold text-gray-900">$11.50</span>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <div>
+                            <p class="text-xs font-medium text-gray-800">1x Mango Lassi</p>
+                            <p class="text-xs text-gray-400">$4.90</p>
+                        </div>
+                        <span class="text-sm font-bold text-gray-900">$4.90</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-3 mb-4">
+                    <div class="flex justify-between text-xs text-gray-500 mb-1">
+                        <span>Subtotal</span><span>$29.30</span></div>
+                    <div class="flex justify-between text-xs text-gray-500 mb-1"><span>Tax</span><span>$2.34</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-bold text-gray-900 mt-2">
+                        <span>Total</span><span>$31.64</span></div>
+                </div>
+
+                <a href="checkout.html"
+                    class="w-full flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-semibold rounded-lg transition-colors mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                    Proceed to Checkout
+                </a>
+                <button
+                    class="w-full flex items-center justify-center gap-1.5 py-2 text-xs text-gray-500 hover:text-primary font-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    </svg>
+                    Clear Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

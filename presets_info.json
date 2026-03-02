@@ -1,0 +1,16 @@
+{
+  "keys": [
+    "version",
+    "children",
+    "variables"
+  ],
+  "colors_exists": false,
+  "typography_exists": false,
+  "presets_exists": false,
+  "styles_exists": false,
+  "tokens_exists": false,
+  "document_exists": false,
+  "pages_exists": false,
+  "themes_exists": false,
+  "typographies_exists": false
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickServe UI – Screen Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-9">
+            <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-2xl font-extrabold text-gray-900">QuickServe UI</h1>
+                <p class="text-sm text-gray-500">Complete screen library · 20 screens implemented</p>
+            </div>
+        </div>
+
+        <!-- Auth Screens -->
+        <section class="mb-8">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Auth / Registration</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <a href="pages/owner-login.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" x2="3" y1="12" y2="12" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Owner
+                        Login</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Sign in email + password</p>
+                </a>
+                <a href="pages/owner-signup.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M20 21a8 8 0 1 0-16 0" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Owner Sign
+                        Up</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Create new account</p>
+                </a>
+                <a href="pages/recover-account.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Recover
+                        Account</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Email recovery link</p>
+                </a>
+                <a href="pages/reset-password.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Reset
+                        Password</p>
+                    <p class="text-xs text-gray-400 mt-0.5">New password form</p>
+                </a>
+                <a href="pages/reset-success.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-green-600"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Reset
+                        Success</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Password updated ✓</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Onboarding Wizard -->
+        <section class="mb-8">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Merchant Onboarding Wizard</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <a href="pages/onboarding-business.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mb-3">
+                        1</div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Business
+                        Profile</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Name, hours, address</p>
+                </a>
+                <a href="pages/onboarding-brand.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mb-3">
+                        2</div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Brand
+                        Setup</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Logo, colors, fonts</p>
+                </a>
+                <a href="pages/onboarding-menu.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mb-3">
+                        3</div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Menu
+                        Manager</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Items, categories, pricing</p>
+                </a>
+                <a href="pages/onboarding-payments.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mb-3">
+                        4</div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Payments
+                        Setup</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Stripe Connect, bank</p>
+                </a>
+                <a href="pages/onboarding-publish.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold mb-3">
+                        5</div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Publish
+                        Storefront</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Launch checklist + go live</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Owner Dashboard -->
+        <section class="mb-8">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Owner Dashboard</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <a href="pages/dashboard.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect width="7" height="7" x="3" y="3" rx="1" />
+                            <rect width="7" height="7" x="14" y="3" rx="1" />
+                            <rect width="7" height="7" x="14" y="14" rx="1" />
+                            <rect width="7" height="7" x="3" y="14" rx="1" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Dashboard
+                    </p>
+                    <p class="text-xs text-gray-400 mt-0.5">Stats, live orders, quick actions</p>
+                </a>
+                <a href="pages/order-manager.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-primary-soft rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary-soft transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" class="text-primary"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                            <rect width="6" height="4" x="9" y="3" rx="1" />
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Order
+                        Manager</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Live feed, filters, detail panel</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Customer Flow -->
+        <section class="mb-8">
+            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Customer Storefront Flow</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <a href="pages/storefront-landing.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-orange-100 transition-colors">
+                        <span class="text-base">🏠</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Storefront
+                        Landing</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Hero, menu highlights, reviews</p>
+                </a>
+                <a href="pages/menu-browse.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-orange-100 transition-colors">
+                        <span class="text-base">🌯</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Menu
+                        Browse</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Filter, search, add to cart</p>
+                </a>
+                <a href="pages/cart-drawer.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-orange-100 transition-colors">
+                        <span class="text-base">🛒</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Cart
+                        Drawer</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Quantities, totals, pickup time</p>
+                </a>
+                <a href="pages/checkout.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-orange-100 transition-colors">
+                        <span class="text-base">💳</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Checkout
+                    </p>
+                    <p class="text-xs text-gray-400 mt-0.5">Contact, card, order summary</p>
+                </a>
+                <a href="pages/order-confirmation.html"
+                    class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 hover:border-red-200 hover:shadow-md transition-all group">
+                    <div
+                        class="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center mb-3 group-hover:bg-green-100 transition-colors">
+                        <span class="text-base">✅</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-800 group-hover:text-primary transition-colors">Order
+                        Confirmation</p>
+                    <p class="text-xs text-gray-400 mt-0.5">Progress tracker, receipt</p>
+                </a>
+            </div>
+        </section>
+
+        <div class="text-center mt-6 py-4 border-t border-gray-100">
+            <p class="text-xs text-gray-400">20 screens · QuickServe Restaurant SaaS Platform · HTML + Tailwind CSS</p>
+        </div>
+    </div>
+</body>
+
+</html>

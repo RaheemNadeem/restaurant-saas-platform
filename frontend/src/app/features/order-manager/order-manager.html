@@ -1,0 +1,203 @@
+<div class="flex pt-14 min-h-screen bg-gray-50">
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Order Manager</h1>
+                    <p class="text-sm text-gray-500 mt-1">Monitor all orders from New to Completed.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <input type="text" [(ngModel)]="searchTerm" placeholder="Search order or name..."
+                            class="pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all w-64 shadow-sm" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </div>
+                    <button (click)="refreshOrders()"
+                        class="flex items-center gap-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium px-3 py-2 rounded-lg hover:bg-gray-50 transition-all shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" [class.animate-spin]="loading">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                            <path d="M21 3v5h-5" />
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                            <path d="M8 16H3v5" />
+                        </svg>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Live Columns Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- New Orders Column -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between px-1">
+                        <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-gray-400"></span>
+                            NEW ORDERS
+                            <span class="text-xs font-normal text-gray-400">({{ getOrdersByStatus('Created').length
+                                }})</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div *ngFor="let order of getOrdersByStatus('Created')" (click)="selectOrder(order)"
+                            [class.ring-2]="selectedOrder?.id === order.id"
+                            class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md cursor-pointer transition-all active:scale-[0.98]">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-sm font-bold text-gray-900">#{{ order.orderNumber }}</span>
+                                <div class="flex flex-col items-end">
+                                    <span class="text-[10px] font-medium text-gray-400">{{ order.createdAt | date :
+                                        'shortTime' }}</span>
+                                    <span [class]="getUrgencyClass(order.createdAt)" class="text-[10px]">
+                                        {{ getElapsedMinutes(order.createdAt) }}m ago
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 mb-1">{{ order.customerName }}</p>
+                            <p class="text-xs text-gray-500 mb-3">{{ order.items.length }} items</p>
+                            <div class="flex gap-2">
+                                <button (click)="$event.stopPropagation(); updateStatus(order, 'Preparing')"
+                                    class="flex-1 py-1.5 bg-primary hover:bg-primary-hover text-white text-[11px] font-semibold rounded-lg transition-colors">
+                                    Accept
+                                </button>
+                                <button (click)="$event.stopPropagation(); printReceipt(order)"
+                                    class="px-2 py-1.5 border border-gray-200 text-gray-500 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9" />
+                                        <path
+                                            d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                                        <rect width="12" height="8" x="6" y="14" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preparing Column -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between px-1">
+                        <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            PREPARING
+                            <span class="text-xs font-normal text-gray-400">({{ getOrdersByStatus('Preparing').length
+                                }})</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div *ngFor="let order of getOrdersByStatus('Preparing')" (click)="selectOrder(order)"
+                            [class.ring-2]="selectedOrder?.id === order.id"
+                            class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm hover:shadow-md cursor-pointer transition-all">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-sm font-bold text-gray-900">#{{ order.orderNumber }}</span>
+                                <div class="flex flex-col items-end">
+                                    <span
+                                        class="text-[10px] font-medium text-blue-500 font-bold italic">Cooking...</span>
+                                    <span [class]="getUrgencyClass(order.createdAt)" class="text-[10px]">
+                                        Waiting {{ getElapsedMinutes(order.createdAt) }}m
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-sm font-medium text-gray-700 mb-1">{{ order.customerName }}</p>
+                            <p class="text-xs text-gray-500 mb-3">{{ order.items.length }} items</p>
+                            <div class="flex gap-2">
+                                <button (click)="$event.stopPropagation(); updateStatus(order, 'Ready')"
+                                    class="flex-1 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-semibold rounded-lg transition-colors">
+                                    Mark Ready
+                                </button>
+                                <button (click)="$event.stopPropagation(); printReceipt(order)"
+                                    class="px-2 py-1.5 border border-gray-200 text-gray-500 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <polyline points="6 9 6 2 18 2 18 9" />
+                                        <path
+                                            d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                                        <rect width="12" height="8" x="6" y="14" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ready Column -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between px-1">
+                        <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                            READY
+                            <span class="text-xs font-normal text-gray-400">({{ getOrdersByStatus('Ready').length
+                                }})</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div *ngFor="let order of getOrdersByStatus('Ready')" (click)="selectOrder(order)"
+                            [class.ring-2]="selectedOrder?.id === order.id"
+                            class="bg-green-50 border border-green-100 p-4 rounded-xl shadow-sm hover:shadow-md cursor-pointer transition-all">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-sm font-bold text-green-800">#{{ order.orderNumber }}</span>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" class="text-green-600">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                            </div>
+                            <p class="text-sm font-medium text-green-900 mb-1">{{ order.customerName }}</p>
+                            <p class="text-xs text-green-700 mb-3">{{ order.items.length }} items</p>
+                            <button (click)="$event.stopPropagation(); updateStatus(order, 'Completed')"
+                                class="w-full py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold rounded-lg transition-colors">
+                                Complete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archive Column -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between px-1">
+                        <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-gray-200"></span>
+                            ARCHIVE
+                            <span class="text-xs font-normal text-gray-400">({{ getOrdersByStatus('Completed').length
+                                }})</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-3 opacity-70 hover:opacity-100 transition-opacity">
+                        <div *ngFor="let order of getOrdersByStatus('Completed')" (click)="selectOrder(order)"
+                            class="bg-white p-3 rounded-lg border border-gray-100 shadow-sm cursor-pointer hover:border-gray-300">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-xs font-bold text-gray-500">#{{ order.orderNumber }}</span>
+                                <span class="text-[9px] text-gray-400">Done</span>
+                            </div>
+                            <p class="text-xs font-medium text-gray-700">{{ order.customerName }}</p>
+                            <p class="text-[10px] text-gray-400 mt-1">${{ order.total }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="!loading && orders.length === 0" class="flex flex-col items-center justify-center py-20">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-gray-300">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                        <rect width="6" height="4" x="9" y="3" rx="1" />
+                    </svg>
+                </div>
+                <p class="text-gray-500 font-medium">No orders found matching criteria.</p>
+                <p class="text-xs text-gray-400 mt-1">Try clearing your search or wait for new orders.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sliding Order Detail Panel (optional, for later) -->
+</div>

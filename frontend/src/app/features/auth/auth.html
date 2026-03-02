@@ -1,0 +1,225 @@
+<div class="min-h-screen flex items-center justify-center p-4 font-sans auth-background">
+    <div class="w-full max-w-sm">
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-2 mb-8" [ngClass]="{'mb-6': !isLoginMode}">
+            <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="text-xl font-semibold text-gray-800">QuickServe</span>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-md px-8 py-7 relative overflow-hidden">
+            <!-- Loader Overlay -->
+            <div *ngIf="isLoading"
+                class="absolute inset-0 bg-white/70 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
+                <div class="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin mb-3"></div>
+                <span class="text-xs font-semibold text-gray-600">{{ isLoginMode ? 'Signing in...' : 'Creating
+                    account...' }}</span>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-900 mb-1">
+                {{ isLoginMode ? 'Welcome back' : 'Create your restaurant account' }}
+            </h1>
+            <p class="text-sm text-gray-500 mb-6">
+                {{ isLoginMode ? 'Sign in to manage your restaurant easily.' : 'Set up a ordering platform live in
+                minutes.' }}
+            </p>
+
+            <!-- Global Error -->
+            <div *ngIf="errorMessage"
+                class="mb-4 p-3 bg-red-50 text-red-600 text-xs font-semibold rounded-lg border border-red-100 flex items-start gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" class="mt-0.5 flex-shrink-0">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                <span>{{ errorMessage }}</span>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form *ngIf="isLoginMode" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+                <!-- Email -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                        </span>
+                        <input type="email" formControlName="email" placeholder="john@myrestaurant.com"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(loginForm, 'email')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(loginForm, 'email')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Please enter a valid email.</span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </span>
+                        <input type="password" formControlName="password" placeholder="Enter your password"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(loginForm, 'password')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(loginForm, 'password')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Password is required.</span>
+                </div>
+
+                <!-- Remember + Forgot -->
+                <div class="flex items-center justify-between mb-5">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" formControlName="rememberMe"
+                            class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary transition-colors" />
+                        <span class="text-sm text-gray-600 font-medium">Remember Me</span>
+                    </label>
+                    <a href="javascript:void(0)"
+                        class="text-sm text-primary hover:text-primary-hover font-bold transition-colors">Forgot
+                        password?</a>
+                </div>
+
+                <button type="submit"
+                    class="w-full py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-sm font-semibold transition-colors duration-150 shadow-sm">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form *ngIf="!isLoginMode" [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()">
+                <!-- Owner Name -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Owner Name</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M20 21a8 8 0 1 0-16 0" />
+                            </svg>
+                        </span>
+                        <input type="text" formControlName="ownerName" placeholder="Ayesha Rahman"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(signupForm, 'ownerName')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(signupForm, 'ownerName')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Owner Name is required.</span>
+                </div>
+
+                <!-- Restaurant Name -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Restaurant Name</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                                <path d="M7 2v20" />
+                                <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+                            </svg>
+                        </span>
+                        <input type="text" formControlName="restaurantName" placeholder="Quick Serve Kitchen"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(signupForm, 'restaurantName')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(signupForm, 'restaurantName')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Restaurant Name is required.</span>
+                </div>
+
+                <!-- Business Email -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Business Email</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                        </span>
+                        <input type="email" formControlName="email" placeholder="owner@restaurant.com"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(signupForm, 'email')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(signupForm, 'email')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Valid email is required.</span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                        </span>
+                        <input type="password" formControlName="password" placeholder="Create a strong password"
+                            [ngClass]="{'border-red-300 focus:ring-red-200': isInvalid(signupForm, 'password')}"
+                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-gray-700 placeholder-gray-400 bg-gray-50 transition-all" />
+                    </div>
+                    <span *ngIf="isInvalid(signupForm, 'password')"
+                        class="text-[10px] text-red-500 mt-1 block font-medium">Password must be at least 6
+                        characters.</span>
+                </div>
+
+                <button type="submit"
+                    class="w-full py-2.5 bg-primary hover:bg-primary-hover text-white rounded-lg text-sm font-semibold transition-colors duration-150 shadow-sm">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Mode Toggle Links -->
+            <div class="mt-4 text-center">
+                <a *ngIf="isLoginMode" routerLink="/merchant/signup"
+                    class="text-sm text-gray-600 hover:text-gray-800 transition-colors">
+                    <span class="font-bold text-gray-700">Create New Account</span>
+                </a>
+                <a *ngIf="!isLoginMode" routerLink="/merchant/login"
+                    class="text-sm text-gray-600 hover:text-gray-800 font-bold transition-colors">
+                    Back to Sign In
+                </a>
+            </div>
+
+            <!-- Disclaimers -->
+            <p *ngIf="!isLoginMode" class="text-center text-xs text-gray-400 mt-4 leading-relaxed">
+                By registering, you agree to our <a href="javascript:void(0)"
+                    class="underline hover:text-gray-600">Terms</a> and <a href="javascript:void(0)"
+                    class="underline hover:text-gray-600">Privacy Policy</a>.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <p *ngIf="isLoginMode" class="text-center text-[11px] text-amber-900/60 mt-5 font-medium leading-relaxed">
+            By continuing, you agree to our
+            <a href="javascript:void(0)" class="underline hover:text-amber-900/80">Terms of Service</a> &amp;
+            <a href="javascript:void(0)" class="underline hover:text-amber-900/80">Privacy Policy</a>
+        </p>
+        <p *ngIf="!isLoginMode" class="text-center text-[11px] text-amber-900/60 mt-4 font-medium">
+            Need help? <a href="javascript:void(0)" class="underline hover:text-amber-900/80 font-bold">Contact
+                support</a>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,208 @@
+<header
+    class="bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6 fixed top-0 left-0 right-0 z-30">
+    <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-primary rounded-md flex items-center justify-center"><svg width="16" height="16"
+                viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </svg></div>
+        <span class="text-base font-semibold text-gray-800">QuickServe</span>
+    </div>
+    <button routerLink="/merchant/menu-manager"
+        class="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <line x1="12" x2="12" y1="5" y2="19" />
+            <line x1="5" x2="19" y1="12" y2="12" />
+        </svg>
+        Add Menu Item
+    </button>
+</header>
+
+<div class="flex pt-14 min-h-screen">
+    <!-- Sidebar -->
+    <aside
+        class="w-56 bg-white border-r border-gray-100 fixed top-14 bottom-0 left-0 flex flex-col justify-between py-6 px-4 z-20">
+        <nav class="space-y-1">
+            <a routerLink="/merchant/dashboard"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary-soft text-primary font-medium text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect width="7" height="7" x="3" y="3" rx="1" />
+                    <rect width="7" height="7" x="14" y="3" rx="1" />
+                    <rect width="7" height="7" x="14" y="14" rx="1" />
+                    <rect width="7" height="7" x="3" y="14" rx="1" />
+                </svg>
+                Dashboard
+            </a>
+            <a routerLink="/merchant/order-manager"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                    <rect width="6" height="4" x="9" y="3" rx="1" />
+                </svg>
+                Orders
+            </a>
+            <a routerLink="/merchant/menu-manager"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                    <path d="M7 2v20" />
+                </svg>
+                Menu
+            </a>
+        </nav>
+        <div>
+            <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer mb-2">
+                <div class="w-8 h-8 rounded-full bg-primary-soft flex items-center justify-center"><span
+                        class="text-xs font-semibold text-primary">AS</span></div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-900 truncate font-outfit">Ayesha Rahman</p>
+                    <p class="text-xs text-gray-500">Owner</p>
+                </div>
+            </div>
+            <button routerLink="/merchant/login"
+                class="flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-primary hover:bg-primary-soft rounded-lg transition-colors w-full"><svg
+                    width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" x2="9" y1="12" y2="12" />
+                </svg>Log out</button>
+        </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="ml-56 flex-1 p-8 bg-gray-50">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                <p class="text-sm text-gray-500 mt-1">Today's overview for your restaurant's operations.</p>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-3 gap-5 mb-6" *ngIf="summary$ | async as summary; else loading">
+                <!-- Today's Orders -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                    <p class="text-xs text-gray-500 font-medium mb-1">Today's Orders</p>
+                    <p class="text-3xl font-bold text-gray-900 mb-1">{{summary.todayOrders | number}}</p>
+                    <p class="text-xs font-medium"
+                        [ngClass]="summary.orderTrend > 0 ? 'text-green-600' : 'text-primary-soft'">
+                        {{summary.orderTrend > 0 ? '+' : ''}}{{summary.orderTrend}}% vs yesterday
+                    </p>
+                </div>
+
+                <!-- Revenue -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                    <p class="text-xs text-gray-500 font-medium mb-1">Revenue</p>
+                    <p class="text-3xl font-bold text-gray-900 mb-1"
+                        *ngIf="summary.revenue % 1 === 0; else revFraction">{{summary.revenue |
+                        currency:'USD':'symbol':'1.0-0'}}</p>
+                    <ng-template #revFraction>
+                        <p class="text-3xl font-bold text-gray-900 mb-1">{{summary.revenue | currency}}</p>
+                    </ng-template>
+                    <p class="text-xs font-medium"
+                        [ngClass]="summary.revenueTrend > 0 ? 'text-green-600' : 'text-primary-soft'">
+                        {{summary.revenueTrend > 0 ? '+' : ''}}{{summary.revenueTrend}}% day over day
+                    </p>
+                </div>
+
+                <!-- Avg Pickup Time -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                    <p class="text-xs text-gray-500 font-medium mb-1">Avg Pickup Time</p>
+                    <p class="text-3xl font-bold text-gray-900 mb-1">{{summary.avgPickupTimeMinutes}}<span
+                            class="text-lg font-medium text-gray-500">m</span>
+                    </p>
+                    <p class="text-xs text-green-600 font-medium">-{{summary.pickupTrendString}} last week</p>
+                </div>
+            </div>
+
+            <div class="flex gap-5">
+                <!-- Live Orders Table -->
+                <div class="flex-1">
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 relative">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h2 class="text-base font-bold text-gray-900">Live Orders</h2>
+                                <p class="text-xs text-gray-400">Currently active orders in real time.</p>
+                            </div>
+                        </div>
+
+                        <div class="divide-y divide-gray-50">
+                            <ng-container *ngIf="liveOrders$ | async as orders; else loadingList">
+                                <div *ngFor="let order of orders" class="flex items-center gap-4 py-3.5">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-gray-900">{{order.orderId}}</p>
+                                        <p class="text-xs text-gray-400">{{order.customerName}} · {{order.itemCount}}
+                                            {{order.itemCount === 1 ? 'item' : 'items'}} · Ready in
+                                            {{order.readyInMinutes}} min</p>
+                                    </div>
+                                    <span class="text-sm font-semibold text-gray-900"
+                                        *ngIf="order.total % 1 === 0; else ordFraction">{{order.total |
+                                        currency:'USD':'symbol':'1.0-0'}}</span>
+                                    <ng-template #ordFraction><span
+                                            class="text-sm font-semibold text-gray-900">{{order.total |
+                                            currency}}</span></ng-template>
+                                    <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full" [ngClass]="{
+                                                'bg-amber-100 text-amber-700': order.status === 'Pending',
+                                                'bg-blue-100 text-blue-700': order.status === 'Preparing',
+                                                'bg-gray-100 text-gray-600': order.status === 'New',
+                                                'bg-green-100 text-green-700': order.status === 'Ready'
+                                              }">
+                                        {{order.status}}
+                                    </span>
+                                </div>
+                                <div *ngIf="orders.length === 0" class="py-8 text-center text-gray-400 text-sm">
+                                    No active orders.
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <a routerLink="/merchant/order-manager"
+                            class="block mt-4 text-sm font-medium text-primary hover:text-primary-hover text-center transition-colors">View
+                            All Orders →</a>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="w-56 flex-shrink-0">
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                        <h3 class="text-sm font-bold text-gray-900 mb-1">Quick Actions</h3>
+                        <p class="text-xs text-gray-400 mb-4">Shortcut actions for quick tasks.</p>
+                        <div class="space-y-2">
+                            <button
+                                class="w-full py-2.5 bg-primary hover:bg-primary-hover text-white text-xs font-semibold rounded-lg transition-colors text-left px-3">Create
+                                Promo Code</button>
+                            <button
+                                class="w-full py-2.5 border border-gray-200 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 text-left px-3">Set
+                                Pickup Hours</button>
+                            <button
+                                class="w-full py-2.5 border border-gray-200 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 text-left px-3">Store
+                                Settings</button>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-gray-100">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs text-gray-600">Store mode:</span>
+                                <span class="text-xs font-semibold text-green-600">Open</span>
+                            </div>
+                            <button
+                                class="w-full py-2.5 bg-primary-soft hover:bg-primary-soft text-primary text-xs font-semibold rounded-lg transition-colors">Save
+                                Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<ng-template #loading>
+    <div class="flex items-center justify-center p-8 text-gray-400 text-sm">
+        Loading metrics...
+    </div>
+</ng-template>
+
+<ng-template #loadingList>
+    <div class="py-8 text-center text-gray-400 text-sm w-full">
+        Fetching active tickets...
+    </div>
+</ng-template>

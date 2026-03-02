@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --brand-primary: #ff6b2c;
   --brand-secondary: #111827;
@@ -7,7 +13,9 @@
   --brand-radius: 12px;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -17,10 +25,25 @@ body {
   overflow-x: hidden;
 }
 
-h1 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
-h2 { font-size: clamp(1.1rem, 2.2vw, 1.4rem); }
-p, label, input, button, a, li { font-size: clamp(0.92rem, 1.5vw, 1rem); }
+h1 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
 
-.btn, button, input[type='checkbox'] {
+h2 {
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+}
+
+p,
+label,
+input,
+button,
+a,
+li {
+  font-size: clamp(0.92rem, 1.5vw, 1rem);
+}
+
+.btn,
+button,
+input[type='checkbox'] {
   min-height: 44px;
 }

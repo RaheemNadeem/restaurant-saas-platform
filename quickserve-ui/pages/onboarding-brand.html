@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickServe – Brand Setup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind-config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Top Bar -->
+    <header
+        class="bg-white border-b border-gray-100 h-14 flex items-center justify-between px-6 fixed top-0 left-0 right-0 z-30">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </div>
+            <span class="text-base font-semibold text-gray-800">QuickServe</span>
+        </div>
+        <button
+            class="bg-primary hover:bg-primary-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">Save
+            Draft</button>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+        <!-- Left Sidebar -->
+        <aside
+            class="w-56 bg-white border-r border-gray-100 fixed top-14 bottom-0 left-0 flex flex-col justify-between py-6 px-4">
+            <nav class="space-y-1">
+                <a href="onboarding-business.html"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary-soft text-primary font-medium text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="7" x="3" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="3" rx="1" />
+                        <rect width="7" height="7" x="14" y="14" rx="1" />
+                        <rect width="7" height="7" x="3" y="14" rx="1" />
+                    </svg>
+                    Onboarding
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                        <rect width="6" height="4" x="9" y="3" rx="1" />
+                    </svg>
+                    Orders
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
+                        <path d="M7 2v20" />
+                    </svg>
+                    Menu
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18" />
+                        <path d="m19 9-5 5-4-4-3 3" />
+                    </svg>
+                    Analytics
+                </a>
+                <a href="#"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-500 hover:bg-gray-50 text-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a9 9 0 0 1 0 14.14" />
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+            <div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center"><span
+                            class="text-xs font-semibold text-primary">AS</span></div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-800 truncate">Ayesha Rahman</p>
+                        <p class="text-xs text-gray-400">Owner</p>
+                    </div>
+                </div>
+                <button class="flex items-center gap-2 px-3 py-2 text-sm text-gray-500 hover:text-gray-700 w-full">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>
+                    Log out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="ml-56 flex-1 p-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-900">Brand Setup</h1>
+                    <p class="text-sm text-gray-500 mt-1">Step 2 of 5 – Configure brand, logos, and language for your
+                        storefront.</p>
+                </div>
+
+                <!-- Step tabs -->
+                <div class="flex gap-0 mb-8 border-b border-gray-200">
+                    <button class="px-5 py-3 text-sm text-gray-500 hover:text-gray-700">1. Business</button>
+                    <button class="px-5 py-3 text-sm font-semibold text-primary border-b-2 border-primary -mb-px">2.
+                        Branding</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">3. Menu</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">4. Payments</button>
+                    <button class="px-5 py-3 text-sm text-gray-500">5. Publish</button>
+                </div>
+
+                <div class="flex gap-6">
+                    <!-- Form -->
+                    <div class="flex-1">
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+                            <h2 class="text-lg font-bold text-gray-900 mb-1">Brand Identity</h2>
+                            <p class="text-sm text-gray-500 mb-6">Configure names, logo, fonts, and language for your
+                                storefront.</p>
+
+                            <form action="onboarding-menu.html" class="space-y-5">
+                                <!-- Display Brand Name -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Display Brand
+                                        Name</label>
+                                    <div class="relative">
+                                        <input type="text" value="Quick Serve Kitchen"
+                                            class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
+                                        <svg class="absolute right-3 top-1/2 -translate-y-1/2 text-green-500" width="16"
+                                            height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <!-- Logo Upload -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Logo Upload</label>
+                                    <div
+                                        class="border-2 border-dashed border-gray-200 rounded-xl p-5 flex gap-4 items-center bg-gray-50">
+                                        <div
+                                            class="w-14 h-14 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2">
+                                                <rect width="18" height="18" x="3" y="3" rx="2" />
+                                                <circle cx="9" cy="9" r="2" />
+                                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium text-gray-700">Upload Image</p>
+                                            <p class="text-xs text-gray-400">PNG or SVG, max 2MB</p>
+                                            <button type="button"
+                                                class="mt-1 text-xs text-primary-soft0 hover:text-primary font-medium flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M3 6h18" />
+                                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                                </svg>
+                                                Remove Image
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Primary Brand Color -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Primary Brand
+                                        Color</label>
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-primary border border-gray-200 cursor-pointer">
+                                        </div>
+                                        <input type="text" value="#BF4444"
+                                            class="flex-1 px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
+                                    </div>
+                                </div>
+
+                                <!-- Typography -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Typography (for –
+                                        Your)</label>
+                                    <select
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400 appearance-none cursor-pointer">
+                                        <option>Inter</option>
+                                        <option>Roboto</option>
+                                        <option>Poppins</option>
+                                        <option>Lato</option>
+                                    </select>
+                                </div>
+
+                                <!-- Brand Description -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Brand
+                                        Description</label>
+                                    <textarea rows="3" placeholder="Enter description..."
+                                        class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400"></textarea>
+                                </div>
+
+                                <p class="text-xs text-gray-400">* minimum input required to advance to step 3</p>
+
+                                <div class="flex justify-between pt-2">
+                                    <a href="onboarding-business.html"
+                                        class="px-6 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50">Back</a>
+                                    <button type="submit"
+                                        class="px-6 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary-hover rounded-lg transition-colors">Continue
+                                        to Menu</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Preview -->
+                    <div class="w-64 flex-shrink-0">
+                        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+                            <h3 class="text-sm font-semibold text-gray-800 mb-1">Live Storefront Preview</h3>
+                            <p class="text-xs text-gray-400 mb-4">Preview live before publishing</p>
+
+                            <!-- Mini Preview Card -->
+                            <div class="border border-red-100 rounded-xl p-4 bg-primary-soft">
+                                <p class="text-sm font-bold text-gray-900">QuickServe Kitchen</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Your brand goes here, ready for pickup.</p>
+                                <button
+                                    class="mt-2 text-xs font-semibold text-white bg-primary px-3 py-1.5 rounded-md">View
+                                    Menu</button>
+                            </div>
+
+                            <div class="mt-4 flex gap-2">
+                                <div class="w-5 h-5 rounded-full bg-primary"></div>
+                                <div class="w-5 h-5 rounded-full bg-red-300"></div>
+                            </div>
+
+                            <button
+                                class="mt-4 w-full border border-gray-200 text-xs text-gray-600 py-2 rounded-lg hover:bg-gray-50 font-medium">Open
+                                Full Preview</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>
