@@ -7,9 +7,15 @@ using QuickServe.Infrastructure.Data;
 using QuickServe.API.Services;
 using QuickServe.Infrastructure.Services;
 
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -18,6 +24,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<INotificationService, LoggingNotificationService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 // ─── JWT Authentication ──────────────────────────────────────────────────────
 var jwtKey = builder.Configuration["Jwt:Key"]

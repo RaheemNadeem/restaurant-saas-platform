@@ -113,67 +113,12 @@
                 <div class="flex-1 h-px bg-gray-200"></div>
             </div>
 
-            <!-- Card form -->
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1.5">Name on card</label>
-                    <div class="relative">
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="8" r="4" />
-                            <path d="M20 21a8 8 0 1 0-16 0" />
-                        </svg>
-                        <input type="text" placeholder="Faten Habieem"
-                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1.5">Card number</label>
-                    <div class="relative">
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <rect width="20" height="14" x="2" y="5" rx="2" />
-                            <line x1="2" x2="22" y1="10" y2="10" />
-                        </svg>
-                        <input type="text" placeholder="4020 4242 4242 4242"
-                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
-                    </div>
-                </div>
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2">
-                        <label class="block text-xs font-medium text-gray-600 mb-1.5">Expiry</label>
-                        <input type="text" placeholder="09 / 26"
-                            class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-600 mb-1.5">CVC</label>
-                        <div class="relative">
-                            <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400"
-                                xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                            <input type="text" placeholder="123"
-                                class="w-full pl-8 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1.5">Billing ZIP</label>
-                    <div class="relative">
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                        </svg>
-                        <input type="text" placeholder="10011"
-                            class="w-full pl-9 pr-3 py-2.5 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-400" />
-                    </div>
-                </div>
+            <!-- Stripe Elements container -->
+            <div id="payment-element" class="mb-4">
+                <!-- Stripe Elements will inject the payment form here -->
             </div>
+
+            <div id="payment-message" class="text-sm font-medium text-red-600 hidden mt-2"></div>
 
             <!-- Footer buttons -->
             <div class="flex gap-3 mt-5">
@@ -181,10 +126,10 @@
                     class="flex-1 py-3 border border-gray-200 text-sm font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
                     <span class="text-base">P</span> PayPal
                 </button>
-                <a routerLink="/customer/order-confirmation"
-                    class="flex-1 py-3 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-colors flex items-center justify-center">
-                    Pay {{ total | currency }}
-                </a>
+                <button id="submit" (click)="placeOrder()" [disabled]="isOrdering"
+                    class="flex-1 py-3 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-colors flex items-center justify-center disabled:opacity-75">
+                    <span id="button-text">{{ isOrdering ? 'Processing...' : 'Pay ' + (total | currency) }}</span>
+                </button>
             </div>
         </div>
     </div>
@@ -194,21 +139,17 @@
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 sticky top-20">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-base font-bold text-gray-900">Order Summary</h2>
-                <span class="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">3 items</span>
+                <span class="text-xs text-green-600 font-medium bg-green-50 px-2 py-0.5 rounded-full">{{
+                    cartSummary?.itemCount || 0 }} items</span>
             </div>
 
             <div class="divide-y divide-gray-50 mb-4">
-                <div class="flex justify-between text-xs py-2.5">
-                    <span class="text-gray-700">Chicken Shawarma Wrap ×1</span>
-                    <span class="font-medium text-gray-900">$12.90</span>
+                <div *ngIf="cartSummary?.items?.length === 0" class="py-4 text-center text-sm text-gray-500">
+                    Your cart is empty.
                 </div>
-                <div class="flex justify-between text-xs py-2.5">
-                    <span class="text-gray-700">Falafel Bowl ×1</span>
-                    <span class="font-medium text-gray-900">$11.90</span>
-                </div>
-                <div class="flex justify-between text-xs py-2.5">
-                    <span class="text-gray-700">Mango Lassi ×1</span>
-                    <span class="font-medium text-gray-900">$4.90</span>
+                <div *ngFor="let item of cartSummary?.items" class="flex justify-between text-xs py-2.5">
+                    <span class="text-gray-700">{{ item.name }} ×{{ item.quantity }}</span>
+                    <span class="font-medium text-gray-900">{{ (item.price * item.quantity) | currency }}</span>
                 </div>
             </div>
 
@@ -247,14 +188,14 @@
                 <p class="text-xs text-gray-400 mt-1">Pickup ETA: 4:30 PM</p>
             </div>
 
-            <a routerLink="/customer/order-confirmation"
-                class="w-full flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-colors mb-3">
+            <button (click)="placeOrder()" [disabled]="isOrdering"
+                class="w-full flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary-hover text-white text-sm font-bold rounded-xl transition-colors mb-3 disabled:opacity-75">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2">
                     <path d="m5 12 5 5L20 7" />
                 </svg>
-                Place Order
-            </a>
+                {{ isOrdering ? 'Processing...' : 'Place Order' }}
+            </button>
             <a routerLink="/customer/cart-drawer"
                 class="w-full flex items-center justify-center gap-1.5 py-2 text-xs text-gray-500 hover:text-primary font-medium transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"

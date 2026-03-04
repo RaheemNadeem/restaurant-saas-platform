@@ -66,7 +66,17 @@ namespace QuickServe.API.Controllers
             tenant.OwnerId = user.Id;
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Account created successfully. Please log in." });
+            var token = GenerateJwt(user);
+            return Ok(new
+            {
+                message = "Account created successfully.",
+                token,
+                userId = user.Id,
+                name = user.Name,
+                role = user.Role,
+                tenantId = user.TenantId,
+                expiresIn = 3600
+            });
         }
 
         /// <summary>

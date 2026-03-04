@@ -1,0 +1,24 @@
+<div class="sitemap-container">
+    <div class="sitemap-content">
+        <header>
+            <h1>🛠️ Dev Sitemap</h1>
+            <p>Quick access to all application routes for testing purposes without needing the sidebar.</p>
+        </header>
+
+        <div class="grid">
+            @for (category of categories; track category.title) {
+            <section class="card">
+                <h2>{{ category.title }}</h2>
+                <ul>
+                    @for (route of category.routes; track route.path) {
+                    <li>
+                        <a [routerLink]="route.path">{{ route.label }}</a>
+                        <span class="path-badge">{{ route.path }}</span>
+                    </li>
+                    }
+                </ul>
+            </section>
+            }
+        </div>
+    </div>
+</div>

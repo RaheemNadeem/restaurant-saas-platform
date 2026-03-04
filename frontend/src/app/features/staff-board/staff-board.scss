@@ -1,0 +1,211 @@
+.board-page {
+    padding: 8px 0;
+}
+
+.board-header {
+    margin-bottom: 24px;
+
+    h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0 0 4px;
+    }
+
+    p {
+        color: #6b7280;
+        font-size: 0.85rem;
+        margin: 0;
+    }
+}
+
+/* Kanban Layout */
+.kanban {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    min-height: 60vh;
+}
+
+.kanban-column {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+
+    h2 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #374151;
+        margin: 0;
+        flex: 1;
+    }
+}
+
+.column-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.new-dot {
+    background: #3b82f6;
+}
+
+.preparing-dot {
+    background: #f59e0b;
+}
+
+.ready-dot {
+    background: #10b981;
+}
+
+.column-count {
+    background: #e5e7eb;
+    color: #374151;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+/* Order Cards */
+.order-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 8px;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.order-id {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #111827;
+}
+
+.order-time {
+    font-size: 0.75rem;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+.badge-ready {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #065f46;
+    background: #d1fae5;
+    padding: 2px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+.card-customer {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.card-total {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Action Buttons */
+.action-btn {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    font-family: inherit;
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+.preparing-btn {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.ready-btn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.complete-btn {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.empty-column {
+    text-align: center;
+    padding: 32px 8px;
+    color: #9ca3af;
+    font-size: 0.85rem;
+}
+
+/* Loading */
+.loading-state {
+    text-align: center;
+    padding: 48px 0;
+    color: #6b7280;
+
+    .spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid #e5e7eb;
+        border-top-color: #6366f1;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 12px;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .kanban {
+        grid-template-columns: 1fr;
+    }
+}

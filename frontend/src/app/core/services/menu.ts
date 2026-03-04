@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Menu {
   id: string;
@@ -30,7 +31,7 @@ export interface MenuItem {
   providedIn: 'root'
 })
 export class MenuService {
-  private apiUrl = 'https://localhost:7197/api/menu'; // Default HTTPS port for .NET WebAPI
+  private apiUrl = `${environment.apiUrl}/menu`;
 
   constructor(private http: HttpClient) { }
 

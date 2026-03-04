@@ -10,10 +10,7 @@ export interface AuthResponse {
     name: string;
     role: string;
     expiresIn: number;
-}
-
-export interface RegisterResponse {
-    message: string;
+    message?: string;
 }
 
 @Injectable({
@@ -44,8 +41,20 @@ export class AuthService {
         );
     }
 
-    register(payload: { name?: string; email: string; password: string }): Observable<RegisterResponse> {
-        return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, payload);
+    register(payload: { name?: string; email: string; password: string; restaurantName?: string }): Observable<AuthResponse> {
+        return this.http.post<AuthResponse>(`${this.apiUrl}/register`, payload).pipe(
+            tap(res => {
+                if (res?.token) {
+                    localStorage.setItem(this.TOKEN_KEY, res.token);
+                    localStorage.setItem(this.USER_KEY, JSON.stringify({
+                        userId: res.userId,
+                        name: res.name,
+                        role: res.role
+                    }));
+                    this.isAuthenticated$.next(true);
+                }
+            })
+        );
     }
 
     logout(): void {

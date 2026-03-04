@@ -1,0 +1,115 @@
+<div class="settings-page">
+    <div class="settings-header">
+        <h1>Settings</h1>
+        <p>Manage your restaurant profile and branding</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab" [class.active]="activeTab === 'profile'" (click)="switchTab('profile')">
+            Business Profile
+        </button>
+        <button class="tab" [class.active]="activeTab === 'branding'" (click)="switchTab('branding')">
+            Branding
+        </button>
+    </div>
+
+    @if (isLoading) {
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading settings...</p>
+    </div>
+    }
+
+    <!-- Save message -->
+    @if (saveMessage) {
+    <div class="save-toast" [class.error]="saveMessage.includes('Failed')">
+        {{ saveMessage }}
+    </div>
+    }
+
+    <!-- Profile Tab -->
+    @if (!isLoading && activeTab === 'profile') {
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="settings-form">
+        <div class="form-group">
+            <label for="restaurantName">Restaurant Name</label>
+            <input id="restaurantName" formControlName="restaurantName" type="text"
+                placeholder="Your restaurant name" />
+            @if (profileForm.get('restaurantName')?.invalid && profileForm.get('restaurantName')?.touched) {
+            <span class="error-text">Restaurant name is required</span>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input id="address" formControlName="address" type="text" placeholder="123 Main St, City, State" />
+            @if (profileForm.get('address')?.invalid && profileForm.get('address')?.touched) {
+            <span class="error-text">Address is required</span>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input id="phone" formControlName="phone" type="tel" placeholder="(555) 123-4567" />
+            @if (profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched) {
+            <span class="error-text">Phone number is required</span>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="restaurantType">Restaurant Type</label>
+            <select id="restaurantType" formControlName="restaurantType">
+                <option value="Fast Casual">Fast Casual</option>
+                <option value="Fine Dining">Fine Dining</option>
+                <option value="Cafe">Cafe</option>
+                <option value="Food Truck">Food Truck</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Bar & Grill">Bar & Grill</option>
+            </select>
+        </div>
+
+        <button type="submit" class="save-btn" [disabled]="isSaving">
+            {{ isSaving ? 'Saving...' : 'Save Profile' }}
+        </button>
+    </form>
+    }
+
+    <!-- Branding Tab -->
+    @if (!isLoading && activeTab === 'branding') {
+    <form [formGroup]="brandingForm" (ngSubmit)="saveBranding()" class="settings-form">
+        <div class="form-group">
+            <label for="primaryColor">Primary Brand Color</label>
+            <div class="color-picker-row">
+                <input id="primaryColor" formControlName="primaryColor" type="color" class="color-input" />
+                <span class="color-value">{{ brandingForm.get('primaryColor')?.value }}</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="typography">Typography</label>
+            <select id="typography" formControlName="typography">
+                <option value="Inter">Inter</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Outfit">Outfit</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Open Sans">Open Sans</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="logoUrl">Logo URL</label>
+            <input id="logoUrl" formControlName="logoUrl" type="url" placeholder="https://example.com/logo.png" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Restaurant Description</label>
+            <textarea id="description" formControlName="description" rows="4"
+                placeholder="Tell customers about your restaurant..."></textarea>
+        </div>
+
+        <button type="submit" class="save-btn" [disabled]="isSaving">
+            {{ isSaving ? 'Saving...' : 'Save Branding' }}
+        </button>
+    </form>
+    }
+</div>

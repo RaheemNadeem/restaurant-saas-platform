@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using QuickServe.Core.Interfaces;
+using QuickServe.Infrastructure.Data;
 
 namespace QuickServe.API.Controllers
 {
@@ -8,31 +11,85 @@ namespace QuickServe.API.Controllers
     [Authorize]
     public class DashboardController : ControllerBase
     {
-        [HttpGet("summary")]
-        public IActionResult GetSummary()
-        {
-            var summary = new
-            {
-                TodayOrders = 142,
-                OrderTrend = +15.2,
-                Revenue = 5240.50,
-                RevenueTrend = +3.1,
-                AvgPickupTimeMinutes = 14,
-                PickupTrendString = "3:12"
-            };
+        private readonly ApplicationDbContext _context;
 
-            return Ok(summary);
+        public DashboardController(ApplicationDbContext context)
+        {
+            _context = context;
         }
 
-        [HttpGet("live-orders")]
-        public IActionResult GetLiveOrders()
+        /// <summary>
+        /// Returns real KPI summary computed from the tenant's orders.
+        /// </summary>
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary()
         {
-            var liveOrders = new[]
+            var today = DateTime.UtcNow.Date;
+            var yesterday = today.AddDays(-1);
+
+            // Today's orders
+            var todayOrders = await _context.Orders
+                .Where(o => o.CreatedAt >= today)
+                .ToListAsync();
+
+            var todayCount = todayOrders.Count;
+            var todayRevenue = todayOrders.Sum(o => o.Total);
+
+            // Yesterday's orders for trend calculation
+            var yesterdayOrders = await _context.Orders
+                .Where(o => o.CreatedAt >= yesterday && o.CreatedAt < today)
+                .ToListAsync();
+
+            var yesterdayCount = yesterdayOrders.Count;
+            var yesterdayRevenue = yesterdayOrders.Sum(o => o.Total);
+
+            // Trend percentages
+            var orderTrend = yesterdayCount > 0
+                ? Math.Round((double)(todayCount - yesterdayCount) / yesterdayCount * 100, 1)
+                : 0;
+
+            var revenueTrend = yesterdayRevenue > 0
+                ? Math.Round((double)((todayRevenue - yesterdayRevenue) / yesterdayRevenue) * 100, 1)
+                : 0;
+
+            // All-time stats
+            var totalOrders = await _context.Orders.CountAsync();
+            var totalRevenue = await _context.Orders.SumAsync(o => o.Total);
+
+            return Ok(new
             {
-                new { OrderId = "#QS-7045", CustomerName = "Sarah Jenkins", ItemCount = 2, ReadyInMinutes = 8, Total = 24.50, Status = "Preparing" },
-                new { OrderId = "#QS-7046", CustomerName = "Mike Ross", ItemCount = 1, ReadyInMinutes = 12, Total = 11.20, Status = "New" },
-                new { OrderId = "#QS-7044", CustomerName = "Emily Clark", ItemCount = 4, ReadyInMinutes = 3, Total = 64.00, Status = "Ready" }
-            };
+                TodayOrders = todayCount,
+                OrderTrend = orderTrend,
+                Revenue = todayRevenue,
+                RevenueTrend = revenueTrend,
+                TotalOrders = totalOrders,
+                TotalRevenue = totalRevenue,
+                AvgPickupTimeMinutes = 14, // Would need timestamps on status transitions for real calc
+                PickupTrendString = "—"
+            });
+        }
+
+        /// <summary>
+        /// Returns real in-progress orders from the database (not Completed/Cancelled).
+        /// </summary>
+        [HttpGet("live-orders")]
+        public async Task<IActionResult> GetLiveOrders()
+        {
+            var liveOrders = await _context.Orders
+                .Include(o => o.Items)
+                .Where(o => o.Status != "Completed" && o.Status != "Cancelled")
+                .OrderByDescending(o => o.CreatedAt)
+                .Take(20)
+                .Select(o => new
+                {
+                    OrderId = o.OrderNumber,
+                    CustomerName = o.CustomerName,
+                    ItemCount = o.Items.Count,
+                    ReadyInMinutes = (int)Math.Max(0, 15 - (DateTime.UtcNow - o.CreatedAt).TotalMinutes),
+                    Total = o.Total,
+                    Status = o.Status
+                })
+                .ToListAsync();
 
             return Ok(liveOrders);
         }

@@ -13,6 +13,8 @@ export interface CartItemDto {
   price: number;
 }
 
+declare var Stripe: any;
+
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -25,6 +27,10 @@ export class Checkout implements OnInit {
   cartSummary: CartSummary;
   discount: number = 0;
   isOrdering = false;
+
+  stripe: any;
+  elements: any;
+  paymentElement: any;
 
   get subtotal(): number {
     return this.cartSummary.subtotal;
@@ -107,9 +113,36 @@ export class Checkout implements OnInit {
     };
 
     this.http.post<any>(`${environment.apiUrl}/orders/checkout`, orderPayload).subscribe({
-      next: (res) => {
-        this.cartService.clearCart();
-        this.router.navigate(['/order-confirmation'], { queryParams: { orderNumber: res.orderNumber } });
+      next: async (res) => {
+        const clientSecret = res.clientSecret;
+
+        if (!this.stripe) {
+          // Note: Replace with your actual Stripe publishable key
+          this.stripe = Stripe('pk_test_...your_stripe_publishable_key_here...');
+        }
+
+        this.elements = this.stripe.elements({ clientSecret });
+        this.paymentElement = this.elements.create('payment');
+        this.paymentElement.mount('#payment-element');
+
+        const { error } = await this.stripe.confirmPayment({
+          elements: this.elements,
+          confirmParams: {
+            return_url: `${window.location.origin}/order-confirmation?orderNumber=${res.orderNumber}`,
+          },
+        });
+
+        if (error) {
+          const messageContainer = document.querySelector('#payment-message');
+          if (messageContainer) {
+            messageContainer.textContent = error.message;
+            messageContainer.classList.remove('hidden');
+          }
+          this.isOrdering = false;
+        } else {
+          this.cartService.clearCart();
+          // The router redirect is natively handled by confirmPayment return_url
+        }
       },
       error: (err) => {
         console.error('Failed to place order', err);

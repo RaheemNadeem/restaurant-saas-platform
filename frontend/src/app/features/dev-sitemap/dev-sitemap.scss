@@ -1,0 +1,83 @@
+.sitemap-container {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background-color: #f6f8fb;
+    font-family: 'Inter', sans-serif;
+}
+
+.sitemap-content {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    header {
+        margin-bottom: 32px;
+        text-align: center;
+
+        h1 {
+            font-size: 2rem;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #6b7280;
+        }
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+    h2 {
+        font-size: 1.1rem;
+        color: #374151;
+        margin-top: 0;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+
+    a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .path-badge {
+        font-family: monospace;
+        font-size: 0.75rem;
+        background: #f3f4f6;
+        color: #4b5563;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+}

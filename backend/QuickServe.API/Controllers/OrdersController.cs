@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using QuickServe.Core.Entities;
 using QuickServe.Core.Interfaces;
 using QuickServe.Infrastructure.Data;
+using QuickServe.API.Services;
 
 namespace QuickServe.API.Controllers
 {
@@ -14,11 +15,13 @@ namespace QuickServe.API.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly INotificationService _notificationService;
+        private readonly IPaymentService _paymentService;
 
-        public OrdersController(ApplicationDbContext context, INotificationService notificationService)
+        public OrdersController(ApplicationDbContext context, INotificationService notificationService, IPaymentService paymentService)
         {
             _context = context;
             _notificationService = notificationService;
+            _paymentService = paymentService;
         }
 
         /// <summary>
@@ -128,6 +131,9 @@ namespace QuickServe.API.Controllers
 
             await _notificationService.SendOrderCreatedNotification(orderId, order.CustomerEmail);
 
+            // Create a PaymentIntent through the injected PaymentService for Sandbox testing
+            var paymentIntent = await _paymentService.CreatePaymentIntentAsync(order);
+
             return Ok(new
             {
                 OrderId = orderId,
@@ -137,7 +143,8 @@ namespace QuickServe.API.Controllers
                 Tax = tax,
                 Total = finalTotal,
                 DiscountApplied = appliedCoupon != null ? appliedCoupon.Code : null,
-                Status = "Created"
+                Status = "Created",
+                ClientSecret = paymentIntent.ClientSecret
             });
         }
 
@@ -158,7 +165,25 @@ namespace QuickServe.API.Controllers
             var order = await _context.Orders.FindAsync(id);
             if (order == null) return NotFound();
 
-            order.Status = request.Status;
+            var validTransitions = new Dictionary<string, List<string>>
+            {
+                { "Created", new List<string> { "Paid", "Cancelled" } },
+                { "Paid", new List<string> { "Preparing", "Cancelled" } },
+                { "Preparing", new List<string> { "Ready", "Cancelled" } },
+                { "Ready", new List<string> { "Completed", "Cancelled" } },
+                { "Completed", new List<string>() },
+                { "Cancelled", new List<string>() }
+            };
+
+            var currentStatus = order.Status;
+            var targetStatus = request.Status;
+
+            if (!validTransitions.ContainsKey(currentStatus) || !validTransitions[currentStatus].Contains(targetStatus))
+            {
+                return BadRequest($"Invalid state transition from {currentStatus} to {targetStatus}.");
+            }
+
+            order.Status = targetStatus;
             _context.Entry(order).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 

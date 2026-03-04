@@ -86,6 +86,8 @@ export class Auth implements OnInit {
     this.authService.register(this.signupForm.value).subscribe({
       next: (res) => {
         this.isLoading = false;
+        // Since the service now auto-logs them in, they have a token.
+        // authGuard will allow them into the merchant section.
         this.router.navigate(['/merchant/onboarding']);
       },
       error: (err) => {

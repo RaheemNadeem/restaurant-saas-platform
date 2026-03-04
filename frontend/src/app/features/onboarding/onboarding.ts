@@ -34,6 +34,7 @@ export class Onboarding implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.loadDraftData();
   }
 
   private initForm() {
@@ -68,6 +69,59 @@ export class Onboarding implements OnInit {
     });
   }
 
+  private loadDraftData() {
+    this.onboardingService.getStatus().subscribe({
+      next: (status) => {
+        if (!status) return;
+
+        // Hydrate profile data
+        if (status.restaurantName) {
+          this.businessGroup.patchValue({
+            restaurantName: status.restaurantName,
+            address: status.address || '',
+            phone: status.phone || '',
+            restaurantType: status.restaurantType || 'Fast Casual'
+          });
+          this.brandGroup.patchValue({ displayBrandName: status.restaurantName });
+        }
+
+        // Hydrate brand data
+        if (status.primaryColor || status.typography || status.description) {
+          this.brandGroup.patchValue({
+            primaryColor: status.primaryColor || '#BF4444',
+            typography: status.typography || 'Inter',
+            description: status.description || ''
+          });
+        }
+
+        // Calculate the furthest step they can be on
+        let farthest = 1;
+
+        // If business data exists
+        if (status.restaurantName && status.address && status.phone) {
+          farthest = 2;
+
+          // If branding data differs from default or has description
+          if (status.description || (status.primaryColor && status.primaryColor !== '#BF4444')) {
+            farthest = 3;
+
+            if (status.hasMenu) {
+              farthest = 4;
+
+              if (status.hasPayment) {
+                farthest = 5;
+              }
+            }
+          }
+        }
+
+        this.currentStep = farthest;
+        this.updateVisualTracker();
+      },
+      error: (err) => console.error('Failed to load status', err)
+    });
+  }
+
   get businessGroup(): FormGroup {
     return this.onboardingForm.get('businessGroup') as FormGroup;
   }
@@ -91,6 +145,29 @@ export class Onboarding implements OnInit {
 
   setStep(step: number) {
     if (step < 1 || step > this.totalSteps) return;
+
+    // Strict validation: Don't allow clicking past invalid preceding steps
+    if (step > this.currentStep) {
+      for (let i = this.currentStep; i < step; i++) {
+        if (i === 1 && this.businessGroup.invalid) {
+          this.businessGroup.markAllAsTouched();
+          return;
+        }
+        if (i === 2 && this.brandGroup.invalid) {
+          this.brandGroup.markAllAsTouched();
+          return;
+        }
+        if (i === 3 && this.menuGroup.invalid) {
+          this.menuGroup.markAllAsTouched();
+          return;
+        }
+        if (i === 4 && this.paymentGroup.invalid) {
+          this.paymentGroup.markAllAsTouched();
+          return;
+        }
+      }
+    }
+
     this.currentStep = step;
     this.updateVisualTracker();
   }
@@ -102,11 +179,10 @@ export class Onboarding implements OnInit {
     }
 
     let saveObs = null;
-    if (this.currentStep === 1 || this.currentStep === 2) {
-      saveObs = this.onboardingService.saveProfile({
-        ...this.businessGroup.value,
-        ...this.brandGroup.value
-      });
+    if (this.currentStep === 1) {
+      saveObs = this.onboardingService.saveProfile(this.businessGroup.value);
+    } else if (this.currentStep === 2) {
+      saveObs = this.onboardingService.saveBranding(this.brandGroup.value);
     } else if (this.currentStep === 3) {
       saveObs = this.onboardingService.saveMenu(this.menuGroup.value);
     } else if (this.currentStep === 4) {
@@ -120,6 +196,50 @@ export class Onboarding implements OnInit {
       });
     } else {
       this.advanceVisualStep();
+    }
+  }
+
+  saveDraft() {
+    let saveObs = null;
+    if (this.currentStep === 1) {
+      if (this.businessGroup.invalid) {
+        this.businessGroup.markAllAsTouched();
+        return;
+      }
+      saveObs = this.onboardingService.saveProfile(this.businessGroup.value);
+    } else if (this.currentStep === 2) {
+      if (this.brandGroup.invalid) {
+        this.brandGroup.markAllAsTouched();
+        return;
+      }
+      saveObs = this.onboardingService.saveBranding(this.brandGroup.value);
+    } else if (this.currentStep === 3) {
+      if (this.menuGroup.invalid) {
+        this.menuGroup.markAllAsTouched();
+        return;
+      }
+      saveObs = this.onboardingService.saveMenu(this.menuGroup.value);
+    } else if (this.currentStep === 4) {
+      if (this.paymentGroup.invalid) {
+        this.paymentGroup.markAllAsTouched();
+        return;
+      }
+      saveObs = this.onboardingService.savePayments(this.paymentGroup.value);
+    }
+
+    if (saveObs) {
+      saveObs.subscribe({
+        next: () => {
+          // Find standard save draft button and provide feedback visually if needed.
+          // For now, logging to console.
+          console.log('Draft saved successfully!');
+          window.alert('Draft saved successfully!');
+        },
+        error: (err) => {
+          console.error('Failed to save draft', err);
+          window.alert('Failed to save draft. Please try again.');
+        }
+      });
     }
   }
 
@@ -150,9 +270,13 @@ export class Onboarding implements OnInit {
   }
 
   finishSetup() {
-    // Validate final checks
-
-    // Move to dashboard
-    this.router.navigate(['/merchant/dashboard']);
+    this.onboardingService.publish().subscribe({
+      next: () => this.router.navigate(['/merchant/dashboard']),
+      error: (err) => {
+        console.error('Failed to publish', err);
+        // Navigate anyway so user isn't stuck
+        this.router.navigate(['/merchant/dashboard']);
+      }
+    });
   }
 }

@@ -56,5 +56,23 @@ namespace QuickServe.API.Controllers
             var item = await _menuService.AddItemAsync(categoryId, request.Name, request.Description, request.Price);
             return Ok(item);
         }
+
+        [AllowAnonymous]
+        [HttpPost("seed")]
+        public async Task<IActionResult> SeedMenu()
+        {
+            // Note: Use matching X-Tenant-Id header to bind to a specific tenant
+            var menu = await _menuService.CreateMenuAsync("QuickServe Default Menu", "Seed data");
+            
+            var wraps = await _menuService.AddCategoryAsync(menu.Id, "Wraps & Bowls", null, 1);
+            await _menuService.AddItemAsync(wraps.Id, "Chicken Shawarma Wrap", "Grilled chicken, garlic sauce, pickles", 12.90m);
+            await _menuService.AddItemAsync(wraps.Id, "Falafel Bowl", "Crispy falafel, hummus, tahini", 11.90m);
+
+            var drinks = await _menuService.AddCategoryAsync(menu.Id, "Drinks", null, 2);
+            await _menuService.AddItemAsync(drinks.Id, "Mango Lassi", "Yogurt-based mango drink", 4.90m);
+            await _menuService.AddItemAsync(drinks.Id, "Mint Lemonade", "Freshly squeezed lemon with mint", 3.50m);
+
+            return Ok(new { Message = "Menu seeded successfully", MenuId = menu.Id });
+        }
     }
 }

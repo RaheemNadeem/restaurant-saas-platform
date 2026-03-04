@@ -1,0 +1,143 @@
+<!-- Cart Drawer Overlay -->
+<div class="fixed inset-0 z-50 flex justify-end">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity" routerLink=".."></div>
+
+    <!-- Drawer Panel -->
+    <div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col transform transition-transform">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                Your Order
+                <span class="text-xs font-medium bg-red-50 text-[#BF4444] px-2 py-0.5 rounded-full">{{
+                    cartSummary?.itemCount || 0 }}</span>
+            </h2>
+            <button routerLink=".."
+                class="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-md hover:bg-gray-50">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="cartItems.length === 0" class="flex-1 flex flex-col items-center justify-center p-8 text-center">
+            <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="text-gray-300" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8" cy="21" r="1" />
+                    <circle cx="19" cy="21" r="1" />
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                </svg>
+            </div>
+            <h3 class="text-base font-semibold text-gray-900 mb-1">Your cart is empty</h3>
+            <p class="text-sm text-gray-500 mb-6">Looks like you haven't added any delicious food yet.</p>
+            <button routerLink="/menu"
+                class="bg-gray-900 hover:bg-gray-800 text-white font-medium px-6 py-2.5 rounded-lg text-sm transition-colors">
+                Browse Menu
+            </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div *ngIf="cartItems.length > 0" class="flex-1 overflow-y-auto p-6">
+            <div class="space-y-4">
+                <div *ngFor="let item of cartItems"
+                    class="flex gap-4 p-3 bg-white border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
+
+                    <!-- Icon placeholder instead of image -->
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-orange-100 to-amber-50 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">
+                        {{ item.name.includes('Wrap') ? '🌯' : item.name.includes('Bowl') ? '🥙' : '🥗' }}
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-sm font-semibold text-gray-900 leading-tight">{{ item.name }}</h4>
+                            <span class="text-sm font-bold text-gray-900 ml-2">{{ item.price | currency }}</span>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-auto">
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-1 border border-gray-100">
+                                <button (click)="removeItem(item.id)"
+                                    class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-white rounded shadow-sm transition-all focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                                <span class="text-xs font-semibold text-gray-900 min-w-[12px] text-center">{{
+                                    item.quantity }}</span>
+                                <button (click)="addItem(item)"
+                                    class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-[#BF4444] hover:bg-white rounded shadow-sm transition-all focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <span class="text-xs text-gray-400 font-medium">
+                                {{ (item.price * item.quantity) | currency }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Banner -->
+            <div class="mt-6 bg-blue-50/50 border border-blue-100 rounded-xl p-4">
+                <div class="flex items-start gap-3">
+                    <span class="text-xl">🥤</span>
+                    <div>
+                        <h5 class="text-sm font-semibold text-gray-900">Add a drink?</h5>
+                        <p class="text-xs text-gray-500 mt-0.5">Most people complete their meal with a refreshing
+                            beverage.</p>
+                        <a routerLink="/menu"
+                            class="inline-block mt-2 text-xs font-bold text-blue-600 hover:text-blue-700">View drinks
+                            &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer / Subtotal -->
+        <div *ngIf="cartItems.length > 0" class="border-t border-gray-100 bg-white p-6 pb-8">
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>Subtotal</span>
+                    <span class="font-medium text-gray-900">{{ subtotal | currency }}</span>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>Tax (8%)</span>
+                    <span>{{ tax | currency }}</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-gray-900 pt-3 border-t border-gray-50 mt-3">
+                    <span>Total</span>
+                    <span>{{ total | currency }}</span>
+                </div>
+            </div>
+
+            <a routerLink="/checkout"
+                class="w-full bg-[#BF4444] hover:bg-[#a33a3a] text-white text-sm font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-sm shadow-red-200">
+                Continue to Checkout
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+            <p class="text-[10px] text-center text-gray-400 mt-3 flex items-center justify-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Secure checkout encrypted via Stripe
+            </p>
+        </div>
+
+    </div>
+</div>

@@ -23,41 +23,58 @@ namespace QuickServe.API.Controllers
         }
 
         /// <summary>
-        /// Returns all registered tenants (from Users table, grouped by tenant).
+        /// Returns all registered tenants with restaurant details and order counts.
         /// </summary>
         [HttpGet("tenants")]
         public async Task<IActionResult> GetTenants()
         {
-            // Get all merchant users with their basic info
-            var merchants = await _context.Users
-                .Where(u => u.Role == "Merchant")
-                .OrderByDescending(u => u.CreatedAt)
-                .Select(u => new
+            var tenants = await _context.Tenants
+                .IgnoreQueryFilters()
+                .OrderByDescending(t => t.CreatedAt)
+                .Select(t => new
                 {
-                    u.Id,
-                    u.Name,
-                    u.Email,
-                    u.CreatedAt
+                    t.Id,
+                    t.RestaurantName,
+                    t.Slug,
+                    t.Address,
+                    t.Phone,
+                    t.RestaurantType,
+                    t.IsPublished,
+                    t.OnboardingComplete,
+                    t.CreatedAt,
+                    OwnerEmail = _context.Users
+                        .Where(u => u.Id == t.OwnerId)
+                        .Select(u => u.Email)
+                        .FirstOrDefault() ?? "—",
+                    OrderCount = _context.Orders
+                        .IgnoreQueryFilters()
+                        .Count(o => o.TenantId == t.Id.ToString()),
+                    Revenue = _context.Orders
+                        .IgnoreQueryFilters()
+                        .Where(o => o.TenantId == t.Id.ToString())
+                        .Sum(o => (decimal?)o.Total) ?? 0m
                 })
                 .ToListAsync();
 
-            return Ok(merchants);
+            return Ok(tenants);
         }
 
         /// <summary>
-        /// Platform-level summary: total merchants, total orders, total revenue.
+        /// Platform-level summary: total tenants, merchants, orders, revenue.
         /// </summary>
         [HttpGet("summary")]
         public async Task<IActionResult> GetPlatformSummary()
         {
+            var totalTenants = await _context.Tenants.IgnoreQueryFilters().CountAsync();
             var totalMerchants = await _context.Users.CountAsync(u => u.Role == "Merchant");
-
-            // IgnoreQueryFilters to count across ALL tenants
             var totalOrders = await _context.Orders.IgnoreQueryFilters().CountAsync();
-            var totalRevenue = await _context.Orders.IgnoreQueryFilters().SumAsync(o => o.Total);
+            var totalRevenue = await _context.Orders.IgnoreQueryFilters().SumAsync(o => (decimal?)o.Total) ?? 0m;
+            var publishedTenants = await _context.Tenants.IgnoreQueryFilters().CountAsync(t => t.IsPublished);
 
             return Ok(new
             {
+                TotalTenants = totalTenants,
+                PublishedTenants = publishedTenants,
                 TotalMerchants = totalMerchants,
                 TotalOrders = totalOrders,
                 TotalRevenue = totalRevenue,
